@@ -3,1515 +3,524 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BIUBOX · Reporte de operaciones · Julio 2026</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<title>BIU SUPPLY · Mes en progreso · Agosto 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #1A1A2E;
-    --surface: #ffffff;
-    --surface-2: #F4F6FB;
-    --ink: #1A1A2E;
-    --ink-2: #555555;
-    --ink-3: #888888;
-    --line: #EEEEEE;
-    --brand: #3D5AAF;
-    --brand-2: #6079BF;
-    --brand-3: #9AAAD8;
-    --good: #00B894;
-    --good-bg: #F0FBF8;
-    --bad: #D63031;
-    --bad-bg: #FFF0F0;
-    --warn: #E17055;
-    --warn-bg: #FFFBF0;
-    --neutral-bg: #F7F7F7;
-    --shadow-sm: 0 1px 2px rgba(26,26,46,0.04), 0 1px 3px rgba(26,26,46,0.06);
-    --shadow-md: 0 4px 6px -1px rgba(26,26,46,0.05), 0 2px 4px -2px rgba(26,26,46,0.04);
-    --shadow-lg: 0 10px 25px -5px rgba(26,26,46,0.08), 0 8px 10px -6px rgba(26,26,46,0.04);
-    --shadow-xl: 0 25px 50px -12px rgba(26,26,46,0.25);
+    --liv:#6079BF; --liv-dark:#3D5AAF; --liv-mid:#9AAAD8; --liv-light:#EEF1FA;
+    --brand-2:#E8A0B4;
+    --bad:#D63031; --warn:#E17055; --yellow:#FDCB6E; --info:#0984E3; --good:#00B894; --gray:#636E72;
+    --red-bg:#FFF0F0; --orange-bg:#FFF5F0; --yellow-bg:#FFFBF0; --blue-bg:#F0F7FF; --green-bg:#F0FBF8; --kpi-bg:#FDF0F3;
+    --ink:#1A1A2E; --ink-2:#555555; --ink-3:#888888; --border:#EEEEEE;
+    --brand-gradient: linear-gradient(135deg, #3D5AAF 0%, #6079BF 60%, #7A95D4 100%);
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--surface-2);
-    color: var(--ink);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    font-feature-settings: 'cv11', 'ss01';
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: #FAFAFA; color: var(--ink); }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  
+  .header {
+    background: var(--brand-gradient);
+    color: white;
+    padding: 40px 0 60px;
+    position: relative;
+    overflow: hidden;
   }
-  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-  header.topbar {
-    background: linear-gradient(135deg, #3D5AAF 0%, #6079BF 60%, #7A95D4 100%);
-    color: white; padding: 32px 0 80px; position: relative; overflow: hidden;
-  }
-  header.topbar::before {
-    content: ''; position: absolute; top: -50%; right: -10%;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(232,160,180,0.20) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .topbar-content { position: relative; z-index: 1; }
-  .topbar-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
-  .brand-mark { display: inline-flex; align-items: center; gap: 12px; font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
-  .brand-mark .dot { width: 12px; height: 12px; border-radius: 3px; background: linear-gradient(135deg, #E8A0B4, #FDCB6E); box-shadow: 0 0 20px rgba(96,121,191,0.6); }
-  .meta { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: rgba(255,255,255,0.6); text-align: right; }
-  .meta strong { color: white; font-weight: 600; }
-  h1.report-title { margin-top: 36px; font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; max-width: 800px; }
-  .report-subtitle { margin-top: 12px; font-size: 16px; color: rgba(255,255,255,0.7); max-width: 700px; }
-  .period-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 8px 16px; background: rgba(154,170,216,0.18); border: 1px solid rgba(154,170,216,0.4); border-radius: 100px; font-size: 13px; font-weight: 500; color: #9AAAD8; }
-  .period-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #0084FF; box-shadow: 0 0 8px #0084FF; }
-  .kpis { margin-top: -56px; position: relative; z-index: 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; padding-bottom: 48px; }
-  .kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-lg); transition: transform 0.2s, box-shadow 0.2s; }
-  .kpi:hover { transform: translateY(-2px); box-shadow: 0 20px 40px -10px rgba(26,26,46,0.15); }
-  .kpi-label { font-size: 12px; font-weight: 600; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.5px; }
-  .kpi-value { margin-top: 8px; font-size: clamp(24px, 3vw, 32px); font-weight: 800; letter-spacing: -1px; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .kpi-delta { margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 100px; }
-  .kpi-delta.up { background: var(--good-bg); color: var(--good); }
-  .kpi-delta.down { background: var(--bad-bg); color: var(--bad); }
-  .kpi-delta.neutral { background: var(--neutral-bg); color: var(--ink-2); }
-  section.block { padding: 48px 0; border-bottom: 1px solid var(--line); }
-  section.block:last-of-type { border-bottom: none; }
-  .block-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
-  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--brand-2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-  h2.section-title { font-size: 28px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; color: var(--ink); }
-  .section-desc { font-size: 14px; color: var(--ink-2); max-width: 540px; }
-  .compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-  .compare-card { background: white; border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
-  .compare-card.highlighted { border-color: var(--brand-2); background: linear-gradient(135deg, #EEF1FA 0%, white 100%); }
-  .compare-label { font-size: 12px; font-weight: 600; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.5px; }
-  .compare-numbers { display: flex; align-items: baseline; gap: 8px; margin-top: 10px; }
-  .compare-prev { font-size: 14px; color: var(--ink-3); text-decoration: line-through; font-variant-numeric: tabular-nums; }
-  .compare-now { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; font-variant-numeric: tabular-nums; }
-  .compare-delta { margin-top: 8px; font-size: 12px; font-weight: 600; }
-  .compare-delta.up { color: var(--good); }
-  .compare-delta.down { color: var(--bad); }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
-  .card { background: white; border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm); }
-  .card-title { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-  .card-sub { font-size: 13px; color: var(--ink-2); margin-bottom: 20px; }
-  .chart-wrap { position: relative; height: 320px; }
-  .chart-wrap-tall { position: relative; height: 380px; }
-  .insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-  .insight { background: white; border-radius: 14px; padding: 22px; border-left: 4px solid; box-shadow: var(--shadow-sm); }
-  .insight.good { border-left-color: var(--good); background: linear-gradient(135deg, #F0FBF8 0%, white 60%); }
-  .insight.bad { border-left-color: var(--bad); background: linear-gradient(135deg, #FFF0F0 0%, white 60%); }
-  .insight.warn { border-left-color: var(--warn); background: linear-gradient(135deg, #FFFBF0 0%, white 60%); }
-  .insight-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
-  .insight.good .insight-icon { background: var(--good-bg); color: var(--good); }
-  .insight.bad .insight-icon { background: var(--bad-bg); color: var(--bad); }
-  .insight.warn .insight-icon { background: var(--warn-bg); color: var(--warn); }
-  .insight-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-  .insight-body { font-size: 13px; color: var(--ink-2); line-height: 1.5; }
-  .insight-stat { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; background: rgba(26,26,46,0.06); padding: 2px 6px; border-radius: 4px; color: var(--ink); }
-  .table-wrap { background: white; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
-  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 13px; }
-  thead { background: var(--surface-2); }
-  thead th { text-align: left; padding: 14px 16px; font-weight: 600; color: var(--ink-2); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-  thead th.num { text-align: right; }
-  thead th.center { text-align: center; }
-  tbody td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; }
-  tbody td.num { text-align: right; font-weight: 500; }
-  tbody td.strong { font-weight: 700; color: var(--ink); }
-  tbody td.center { text-align: center; }
-  tbody tr:hover { background: var(--surface-2); }
-  tbody tr:last-child td { border-bottom: none; }
-  tbody tr.clickable { cursor: pointer; transition: all 0.15s; }
-  tbody tr.clickable:hover { background: linear-gradient(90deg, #EEF1FA 0%, #F4F6FB 100%); }
-  tbody tr.clickable::after { content: ''; }
-  .sku-cell { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink); font-weight: 600; }
-  .product-name { color: var(--ink-2); font-size: 13px; font-weight: 500; }
-  .product-name-wrap { display: flex; align-items: center; gap: 8px; }
-  .new-badge { display: inline-block; padding: 2px 6px; background: linear-gradient(135deg, #FDCB6E, #D4A017); color: #5C3D00; font-size: 9px; font-weight: 800; border-radius: 4px; letter-spacing: 0.5px; }
-  .arrow-icon { color: var(--brand-2); opacity: 0; transition: opacity 0.15s; font-size: 14px; }
-  tbody tr.clickable:hover .arrow-icon { opacity: 1; }
-  .pill { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-  .pill.good { background: var(--good-bg); color: var(--good); }
-  .pill.bad { background: var(--bad-bg); color: var(--bad); }
-  .pill.neutral { background: var(--neutral-bg); color: var(--ink-2); }
-  .pill.warn { background: var(--warn-bg); color: #92400e; }
-  .pill.info { background: #EEF1FA; color: #3D5AAF; }
-  .pill.pending { background: #FDF0F3; color: #6079BF; font-weight: 700; }
-  .order-row.pending { background: linear-gradient(90deg, #FDF0F3 0%, transparent 80%); margin: 0 -28px; padding: 14px 28px; border-left: 3px solid #E8A0B4; }
-  .order-amount.pending { color: #6079BF; font-style: italic; }
-  .rank-1 { color: #D4A017; font-weight: 800; }
-  .rank-2 { color: #555555; font-weight: 800; }
-  .rank-3 { color: #D4A017; font-weight: 800; opacity: 0.7; }
-  tbody tr.refund { background: linear-gradient(90deg, #FFF0F0 0%, white 60%); }
-  .nosales { background: linear-gradient(135deg, #FFFBF0 0%, white 100%); border: 1px solid #FDCB6E; border-radius: 14px; padding: 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-  .nosales-text strong { color: var(--ink); }
-  details summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--brand-2); user-select: none; list-style: none; }
-  details summary::-webkit-details-marker { display: none; }
-  details summary::after { content: ' ↓'; }
-  details[open] summary::after { content: ' ↑'; }
-  .nosales-list { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
-  .nosales-item { padding: 6px 12px; background: white; border: 1px solid var(--line); border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2); }
-  footer.foot { background: #1A1A2E; color: rgba(255,255,255,0.7); padding: 40px 0; margin-top: 60px; }
-  footer.foot h3 { color: white; font-size: 16px; margin-bottom: 12px; font-weight: 700; }
-  footer.foot p { font-size: 13px; line-height: 1.6; margin-bottom: 8px; }
-  footer.foot .grid-2 { gap: 40px; }
-  footer.foot ul { list-style: none; }
-  footer.foot ul li { font-size: 13px; padding: 4px 0; }
-  footer.foot ul li::before { content: '— '; opacity: 0.4; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(circle, rgba(26,26,46,0.02) 1px, transparent 1px); background-size: 32px 32px; pointer-events: none; z-index: 0; }
-  header, section, footer { position: relative; z-index: 1; }
-
-  /* MODAL STYLES */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(26,26,46,0.6);
-    backdrop-filter: blur(4px);
-    z-index: 100;
-    display: none;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 40px 20px;
-    overflow-y: auto;
-    animation: fadeIn 0.2s ease-out;
-  }
-  .modal-overlay.active { display: flex; }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-  .modal {
-    background: white;
-    border-radius: 20px;
-    max-width: 1100px;
-    width: 100%;
-    box-shadow: var(--shadow-xl);
-    animation: slideUp 0.25s ease-out;
-    margin: auto;
-  }
-  .modal-header {
-    padding: 24px 28px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    position: sticky;
-    top: 0;
-    background: white;
-    border-radius: 20px 20px 0 0;
-    z-index: 1;
-  }
-  .modal-title-block { flex: 1; min-width: 0; }
-  .modal-sku-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 700;
-    background: linear-gradient(135deg, #EEF1FA, #9AAAD8);
-    color: #3D5AAF;
-    padding: 4px 10px;
-    border-radius: 6px;
-    display: inline-block;
-    margin-bottom: 8px;
-  }
-  .modal-title {
-    font-size: 22px; font-weight: 800;
-    letter-spacing: -0.5px;
-    color: var(--ink);
-    margin-bottom: 6px;
-  }
-  .modal-stats {
-    display: flex; gap: 20px; flex-wrap: wrap;
-    font-size: 13px;
-    color: var(--ink-2);
-    margin-top: 6px;
-  }
-  .modal-stat strong { color: var(--ink); font-variant-numeric: tabular-nums; }
-  .close-btn {
-    background: var(--neutral-bg);
-    border: none;
-    width: 36px; height: 36px;
+  .header::before {
+    content: ''; position: absolute; top: -50%; right: -20%; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(232, 160, 180, 0.3) 0%, transparent 70%);
     border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-    color: var(--ink-2);
-    transition: all 0.15s;
-    flex-shrink: 0;
   }
-  .close-btn:hover { background: var(--bad-bg); color: var(--bad); }
-  .modal-body { padding: 24px 28px 28px; }
-  .modal-toolbar {
-    display: flex; gap: 8px; flex-wrap: wrap;
-    margin-bottom: 16px;
+  .header-inner { position: relative; z-index: 1; }
+  .header .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: 0.85; margin-bottom: 8px;
   }
-  .filter-chip {
-    padding: 6px 14px;
-    border: 1px solid var(--line);
-    background: white;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--ink-2);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: inherit;
+  .header h1 { font-size: 32px; font-weight: 800; margin: 0 0 8px; line-height: 1.15; }
+  .header .subtitle { font-size: 14px; opacity: 0.9; max-width: 700px; }
+  .header-meta { font-size: 12px; opacity: 0.75; margin-top: 16px; }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; margin-top: 12px; backdrop-filter: blur(10px);
   }
-  .filter-chip:hover { border-color: var(--brand-2); color: var(--brand-2); }
-  .filter-chip.active {
-    background: var(--brand);
-    color: white;
-    border-color: var(--brand);
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #FDCB6E; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  .block { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .block-header { margin-bottom: 24px; }
+  .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--liv-dark); margin-bottom: 6px;
   }
-  .order-row {
-    border-bottom: 1px solid var(--line);
-    padding: 14px 0;
-    display: grid;
-    grid-template-columns: 80px 1fr auto auto auto auto;
-    gap: 16px;
-    align-items: center;
+  .section-title { font-size: 26px; font-weight: 800; margin: 0 0 10px; letter-spacing: -0.5px; }
+  .section-desc { font-size: 14px; color: var(--ink-2); max-width: 800px; line-height: 1.5; margin: 0; }
+  
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 24px 0; }
+  .kpi {
+    background: white; padding: 20px 22px; border-radius: 12px; border: 1px solid var(--border);
+    transition: transform 0.15s;
   }
-  .order-row.refund { background: linear-gradient(90deg, #FFF0F0 0%, transparent 80%); margin: 0 -28px; padding: 14px 28px; }
-  .order-row.returned { background: linear-gradient(90deg, #eff6ff 0%, transparent 80%); margin: 0 -28px; padding: 14px 28px; }
-  .order-row.canceled { background: linear-gradient(90deg, #F7F7F7 0%, transparent 80%); margin: 0 -28px; padding: 14px 28px; }
-  .order-row:last-child { border-bottom: none; }
-  .order-id {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px; font-weight: 700;
-    color: var(--ink);
-  }
-  .order-date {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--ink-3);
-    margin-top: 2px;
-  }
-  .order-status-block { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
-  .order-amount {
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    font-size: 14px;
-  }
-  .order-amount.refund { color: var(--bad); }
-  .order-amount.good { color: var(--good); }
-  .order-amount.zero { color: var(--ink-3); }
-  .order-net-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--ink-3);
-    font-weight: 600;
-  }
-  .tracking-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 14px;
-    background: linear-gradient(135deg, #0084FF, #6079BF);
-    color: white;
-    border-radius: 8px;
-    font-size: 12px; font-weight: 600;
-    text-decoration: none;
-    transition: all 0.15s;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .tracking-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,132,255,0.35); }
-  .tracking-btn:disabled, .tracking-btn.disabled {
-    background: var(--neutral-bg);
-    color: var(--ink-3);
-    cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
-  }
-  .tracking-btn.disabled:hover { transform: none; box-shadow: none; }
-  .guia-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--ink-3);
-    margin-top: 4px;
-    text-align: right;
-  }
-  .order-summary-bar {
-    background: var(--surface-2);
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 16px;
-  }
-  .osb-item { }
-  .osb-label { font-size: 11px; font-weight: 600; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.5px; }
-  .osb-value { font-size: 18px; font-weight: 800; color: var(--ink); margin-top: 4px; font-variant-numeric: tabular-nums; }
-  .osb-value.bad { color: var(--bad); }
-  .osb-value.good { color: var(--good); }
-  @media (max-width: 700px) {
-    .order-row { grid-template-columns: 1fr; gap: 8px; padding: 16px 0; }
-    .order-row.refund, .order-row.returned, .order-row.canceled { margin: 0 -28px; padding: 16px 28px; }
-    .modal-header { padding: 20px; }
-    .modal-body { padding: 20px; }
-    .tracking-btn { width: 100%; justify-content: center; }
-  }
+  .kpi:hover { transform: translateY(-2px); }
+  .kpi-label { font-size: 11px; font-weight: 700; color: var(--ink-3); letter-spacing: 1px; text-transform: uppercase; }
+  .kpi-value { font-size: 32px; font-weight: 800; margin: 8px 0 4px; letter-spacing: -1px; }
+  .kpi-delta { font-size: 11px; padding: 4px 10px; border-radius: 20px; display: inline-block; font-weight: 600; }
+  .kpi-delta.up { background: var(--green-bg); color: var(--good); }
+  .kpi-delta.down { background: var(--red-bg); color: var(--bad); }
+  .kpi-delta.neutral { background: var(--blue-bg); color: var(--info); }
+  
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; background: white; }
+  th { text-align: left; padding: 14px 16px; font-size: 11px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--border); background: #FAFAFA; }
+  th.num { text-align: right; }
+  th.center { text-align: center; }
+  td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.strong { font-weight: 700; }
+  td.center { text-align: center; }
+  tr:last-child td { border-bottom: none; }
+  .sku-cell { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-2); font-weight: 600; }
+  
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+  .pill.good { background: var(--green-bg); color: var(--good); }
+  .pill.bad { background: var(--red-bg); color: var(--bad); }
+  .pill.warn { background: var(--yellow-bg); color: #B8860B; }
+  .pill.info { background: var(--blue-bg); color: var(--info); }
+  .pill.neutral { background: #F5F5F5; color: var(--gray); }
+  
+  .foot { background: var(--ink); color: white; padding: 30px 0; text-align: center; font-size: 12px; opacity: 0.9; }
 </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="container topbar-content">
-    <div class="topbar-row">
-      <div class="brand-mark"><span class="dot"></span> BIUBOX <span style="opacity:0.6; font-weight: 400;">· Fulfillment</span></div>
-      <div class="meta">
-        Reporte generado el <strong>27 de julio, 2026</strong><br>
-        Cliente: <strong>RIBEN</strong>
-      </div>
+
+<header class="header">
+  <div class="container header-inner">
+    <div class="eyebrow">Reporte Intermedio · En construcción</div>
+    <h1>Progreso del mes en curso · Agosto 2026</h1>
+    <p class="subtitle">Vista del avance acumulado desde el cierre de julio (26/jul) hasta hoy. Se irá actualizando durante el mes hasta el cierre del 26/agosto.</p>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      <span>En construcción · corte previsto 26/agosto</span>
     </div>
-    <h1 class="report-title">Resumen mensual de tus ventas y operación.</h1>
-    <p class="report-subtitle">Una vista completa de tu desempeño como Afiliado en BIU SUPPLY Marketplace.</p>
-    <span class="period-badge">Periodo: 26 junio — 26 julio 2026</span>
+    <div class="header-meta">Última actualización: 06 de agosto, 2026 · Cliente: <strong>RIBEN</strong></div>
   </div>
 </header>
 
-<div class="container">
-  <div class="kpis">
-    <div class="kpi"><div class="kpi-label">Pedidos pagados</div><div class="kpi-value">135</div><div class="kpi-delta up">+13 liberados del mes anterior</div></div>
-    <div class="kpi"><div class="kpi-label">Venta efectiva</div><div class="kpi-value">$151,905</div><div class="kpi-delta up">Incluye pendientes liberados</div></div>
-    <div class="kpi"><div class="kpi-label">Neto al seller</div><div class="kpi-value">$89,968</div><div class="kpi-delta down">↓ 6% vs mes anterior</div></div>
-    <div class="kpi"><div class="kpi-label">Reembolsos</div><div class="kpi-value">3</div><div class="kpi-delta up">↓ 40% — menos devoluciones</div></div>
-  </div>
-</div>
-
-
-<!-- SECCIÓN: HISTÓRICO MENSUAL -->
-<section class="block" style="background: linear-gradient(135deg, #EEF1FA 0%, #FFFFFF 100%);">
+<!-- KPIs generales del progreso -->
+<section class="block" style="background: white;">
   <div class="container">
     <div class="block-header">
-      <div>
-        <div class="eyebrow">Histórico · Acumulado del año</div>
-        <h2 class="section-title">Pagos mes a mes en 2026</h2>
-      </div>
-      <p class="section-desc">Registro acumulativo de todos los meses procesados. Se va llenando conforme se cierran periodos. La data histórica no se elimina.</p>
+      <div class="eyebrow">Resumen del avance</div>
+      <h2 class="section-title">Estado actual del mes 4</h2>
+      <p class="section-desc">Datos consolidados hasta el 5 de agosto. Faltan aproximadamente 21 días para el cierre.</p>
     </div>
-
-    <!-- KPIs del año -->
-    <div class="kpis" style="margin-top: 0; padding-bottom: 24px;">
+    
+    <div class="kpis">
       <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">Pedidos pagados</div>
-        <div class="kpi-value" style="color: #00B894;">485</div>
-        <div class="kpi-delta neutral">En 3 meses (incluye +13 liberados)</div>
+        <div class="kpi-label">Pedidos nuevos del mes 4</div>
+        <div class="kpi-value" style="color: #00B894;">23</div>
+        <div class="kpi-delta up">10 días de actividad · ~2.3/día</div>
       </div>
       <div class="kpi" style="border-left: 4px solid #3D5AAF;">
-        <div class="kpi-label">Neto pagado a RIBEN</div>
-        <div class="kpi-value" style="color: #3D5AAF;">$308,665</div>
-        <div class="kpi-delta neutral">Sobre venta de $529,605</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #6079BF;">
-        <div class="kpi-label">Servicio BIUBOX OP</div>
-        <div class="kpi-value" style="color: #3D5AAF;">$19,400</div>
-        <div class="kpi-delta neutral">$40 × pedido · Almacén GRATIS</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #D4A017;">
-        <div class="kpi-label">Servicio BIUBOX prom/mes</div>
-        <div class="kpi-value" style="color: #D4A017;">$6,467</div>
-        <div class="kpi-delta neutral">Promedio de 3 meses</div>
+        <div class="kpi-label">Venta acumulada del mes</div>
+        <div class="kpi-value" style="color: #3D5AAF;">$35,905</div>
+        <div class="kpi-delta neutral">Preliminar</div>
       </div>
       <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">Servicio de Almacenamiento</div>
-        <div class="kpi-value" style="color: #00B894;">GRATIS</div>
-        <div class="kpi-delta up" style="background: #F0FBF8; color: #00B894;">Temporada promocional</div>
+        <div class="kpi-label">Liberados de julio</div>
+        <div class="kpi-value" style="color: #00B894;">8/9</div>
+        <div class="kpi-delta up">$10,356 procederán</div>
+      </div>
+      <div class="kpi" style="border-left: 4px solid #E17055;">
+        <div class="kpi-label">Reembolsos retroactivos</div>
+        <div class="kpi-value" style="color: #E17055;">6</div>
+        <div class="kpi-delta down">$9,919 a descontar</div>
       </div>
     </div>
+  </div>
+</section>
 
+<!-- Pendientes de julio liberados -->
+<section class="block" style="background: linear-gradient(135deg, #F0FBF8 0%, #FFFFFF 100%);">
+  <div class="container">
+    <div class="block-header">
+      <div class="eyebrow">01 · Liberados de julio</div>
+      <h2 class="section-title">✅ 8 de 9 pendientes ya salieron del almacén</h2>
+      <p class="section-desc">De los 9 pedidos que quedaron pendientes al cierre de julio, 8 ya fueron entregados y proceden pago en el cierre de agosto.</p>
+    </div>
+    
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Mes</th>
-            <th>Periodo</th>
-            <th class="num">Del mes</th>
-            <th class="num">Liberados</th>
-            <th class="num">Total ped</th>
-            <th class="num">Reemb.</th>
-            <th class="num">Pendientes</th>
-            <th class="num">Venta total</th>
-            <th class="num">Neto seller</th>
-            <th class="num">💰 BIUBOX OP</th>
+            <th>Pedido</th>
+            <th>SKU</th>
+            <th>Producto</th>
+            <th>Status</th>
+            <th class="num">Venta</th>
           </tr>
         </thead>
         <tbody>
-          
-        <tr style="">
-          <td><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--ink-2);">01</span></td>
-          <td style="font-weight: 700;">Abril—Mayo</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2);">23/abril → 24/mayo</td>
-          <td class="num"><span class="pill good">196</span></td>
-          <td class="num"><span style="color: var(--ink-3);">—</span></td>
-          <td class="num strong">196</td>
-          <td class="num" style="color: var(--bad);">8</td>
-          <td class="num"><span style="color: var(--ink-3);">—</span></td>
-          <td class="num">$211,962.16</td>
-          <td class="num strong" style="color: var(--good);">$123,220.35</td>
-          <td class="num strong" style="color: #3D5AAF; background: #EEF1FA;">$7,840.00</td>
-        </tr>
-        <tr style="">
-          <td><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--ink-2);">02</span></td>
-          <td style="font-weight: 700;">Mayo—Junio</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2);">25/mayo → 25/junio</td>
-          <td class="num"><span class="pill good">154</span></td>
-          <td class="num"><span style="color: var(--ink-3);">—</span></td>
-          <td class="num strong">154</td>
-          <td class="num" style="color: var(--bad);">5</td>
-          <td class="num">13 <span style="color: var(--ink-3); font-size: 11px;">($12,568)</span></td>
-          <td class="num">$165,737.95</td>
-          <td class="num strong" style="color: var(--good);">$95,477.31</td>
-          <td class="num strong" style="color: #3D5AAF; background: #EEF1FA;">$6,160.00</td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #EEF1FA 0%, transparent 60%);">
-          <td><span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--ink-2);">03</span></td>
-          <td style="font-weight: 700;">Junio—Julio<span class="pill" style="background: #EEF1FA; color: #3D5AAF; margin-left: 6px; font-weight: 700; font-size: 10px;">MES ACTUAL</span></td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2);">26/junio → 26/julio</td>
-          <td class="num"><span class="pill good">122</span></td>
-          <td class="num"><span style="color: #00B894; font-weight: 700;">+13</span></td>
-          <td class="num strong">135</td>
-          <td class="num" style="color: var(--bad);">3</td>
-          <td class="num">9 <span style="color: var(--ink-3); font-size: 11px;">($11,253)</span></td>
-          <td class="num">$151,904.51</td>
-          <td class="num strong" style="color: var(--good);">$89,967.68</td>
-          <td class="num strong" style="color: #3D5AAF; background: #EEF1FA;">$5,400.00</td>
-        </tr>
-          
-        <tr style="background: linear-gradient(90deg, #3D5AAF 0%, #6079BF 100%); color: white; font-weight: 800;">
-          <td colspan="3" style="color: white; padding: 16px;">TOTAL ACUMULADO EN 2026 · 3 meses</td>
-          <td class="num" style="color: white;">472</td>
-          <td class="num" style="color: white;">+13</td>
-          <td class="num" style="color: white;">485</td>
-          <td class="num" style="color: white;">16</td>
-          <td class="num" style="color: white;">22 <span style="opacity: 0.7; font-size: 11px;">($23,822)</span></td>
-          <td class="num" style="color: white;">$529,604.62</td>
-          <td class="num" style="color: white; font-size: 15px;">$308,665.34</td>
-          <td class="num" style="color: #FDCB6E; font-size: 15px;">$19,400.00</td>
-        </tr>
+
+          <tr>
+            <td class="sku-cell">6350116180</td>
+            <td class="sku-cell">1200353877</td>
+            <td>Súper Reductivo Intenso</td>
+            <td><span class="pill good">Entregado</span></td>
+            <td class="num strong">$897.75</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">3240115088</td>
+            <td class="sku-cell">1163808311</td>
+            <td>ISO 100 Dymatize</td>
+            <td><span class="pill good">Entregado</span></td>
+            <td class="num strong">$2,279.18</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">3300115459</td>
+            <td class="sku-cell">1202635756</td>
+            <td>Ashwagandha Pure Nutrition</td>
+            <td><span class="pill good">Entregado</span></td>
+            <td class="num strong">$879.80</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">6730115551</td>
+            <td class="sku-cell">1200353877</td>
+            <td>Súper Reductivo Intenso</td>
+            <td><span class="pill good">Entregado</span></td>
+            <td class="num strong">$897.75</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">7970115626</td>
+            <td class="sku-cell">1190398834</td>
+            <td>Reductivo Mesoestetic</td>
+            <td><span class="pill good">Entregado</span></td>
+            <td class="num strong">$1,249.00</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">2930115836</td>
+            <td class="sku-cell">1197609784</td>
+            <td>Creatina Gat Sport (variante)</td>
+            <td><span class="pill good">Entregado</span></td>
+            <td class="num strong">$978.22</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">8930115254</td>
+            <td class="sku-cell">1163808311</td>
+            <td>ISO 100 Dymatize</td>
+            <td><span class="pill good">Entregado</span></td>
+            <td class="num strong">$2,276.18</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">5930115818</td>
+            <td class="sku-cell">1200353877</td>
+            <td>Súper Reductivo Intenso</td>
+            <td><span class="pill good">Entregado</span></td>
+            <td class="num strong">$897.75</td>
+          </tr>
+          <tr style="background: #F0FBF8; font-weight: 700;">
+            <td colspan="4" style="text-align: right;">TOTAL a pagar en agosto:</td>
+            <td class="num strong" style="color: var(--good);">$10,355.63</td>
+          </tr>
         </tbody>
       </table>
     </div>
-
-    <div style="margin-top: 20px; padding: 16px 20px; background: white; border-radius: 12px; border: 1px solid #EEEEEE; display: flex; gap: 16px; align-items: flex-start;">
-      <div style="font-size: 22px;">📊</div>
-      <div style="font-size: 13px; color: var(--ink-2); line-height: 1.6;">
-        <strong style="color: var(--ink);">Cómo leer esta tabla:</strong>
-        <ul style="margin: 8px 0 0 20px; padding: 0;">
-          <li><strong>Del mes</strong>: pedidos generados y despachados dentro del rango del reporte.</li>
-          <li><strong>Liberados</strong>: pedidos que quedaron pendientes de envío el mes anterior y este mes ya se despacharon. Se pagan aquí, no retroactivo.</li>
-          <li><strong>Neto seller</strong>: lo que efectivamente cobra RIBEN después de comisiones, retenciones y envío. (Sin almacenamiento por ahora.)</li>
-          <li><strong>BIUBOX OP</strong>: el servicio de operación de BIUBOX ($40 por pedido procesado — incluye los liberados). <strong>Almacenamiento: GRATIS sin cobro por el momento.</strong></li>
-          <li>La <strong>data histórica no se puede modificar</strong>. Cualquier ajuste por reembolso retrasado se aplica en el mes de descubrimiento.</li>
-        </ul>
-      </div>
+    
+    <div style="margin-top: 20px; padding: 16px 20px; background: white; border-radius: 12px; border: 1px solid #EEE; border-left: 4px solid #FDCB6E;">
+      <strong style="color: var(--ink);">⏳ Aún pendiente:</strong> 1 pedido (2530116581 · Súper Reductivo · $897.75) sigue en estado "Para recoger". Se verificará en cierre de agosto.
     </div>
   </div>
 </section>
 
-<section class="block" style="background: white;">
-  <div class="container">
-    <div class="block-header">
-      <div><div class="eyebrow">01 · Comparativo</div><h2 class="section-title">¿Cómo te fue este mes vs el anterior?</h2></div>
-      <p class="section-desc">Lectura rápida de los movimientos importantes entre el mes pasado (23 abr — 24 may) y este (25 may — 25 jun).</p>
-    </div>
-    <div class="compare">
-      <div class="compare-card"><div class="compare-label">Pedidos pagados</div><div class="compare-numbers"><span class="compare-prev">154</span><span class="compare-now">135</span></div><div class="compare-delta down">↓ 19 pedidos (−12%)</div></div>
-      <div class="compare-card"><div class="compare-label">Venta efectiva</div><div class="compare-numbers"><span class="compare-prev">$165,738</span><span class="compare-now">$151,905</span></div><div class="compare-delta down">↓ $13,833 (−8%)</div></div>
-      <div class="compare-card"><div class="compare-label">Neto al seller</div><div class="compare-numbers"><span class="compare-prev">$95,477</span><span class="compare-now">$89,968</span></div><div class="compare-delta down">↓ $5,509 (−6%)</div></div>
-      <div class="compare-card"><div class="compare-label">Reembolsos</div><div class="compare-numbers"><span class="compare-prev">5</span><span class="compare-now">3</span></div><div class="compare-delta up">↓ 2 menos (−40%)</div></div>
-      <div class="compare-card highlighted"><div class="compare-label">SKUs con venta</div><div class="compare-numbers"><span class="compare-prev">17</span><span class="compare-now">15</span></div><div class="compare-delta down">↓ 2 menos (−12%)</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="block">
-  <div class="container">
-    <div class="block-header">
-      <div><div class="eyebrow">02 · Productos</div><h2 class="section-title">¿Qué está vendiendo?</h2></div>
-      <p class="section-desc">Visualización del volumen y la utilidad neta. Las 15 publicaciones con ventas representan el 100% del ingreso. Los pedidos pendientes de envío se evalúan el próximo mes.</p>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <h3 class="card-title">Top 10 por utilidad neta</h3>
-        <p class="card-sub">Lo que efectivamente ganas después de todos los cargos.</p>
-        <div class="chart-wrap-tall"><canvas id="topNeto"></canvas></div>
-      </div>
-      <div class="card">
-        <h3 class="card-title">Distribución de pedidos</h3>
-        <p class="card-sub">El 52% de los pedidos pagados viene de 2 productos (Súper Reductivo + Creatina Gat).</p>
-        <div class="chart-wrap-tall"><canvas id="distribucion"></canvas></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="block" style="background: white;">
-  <div class="container">
-    <div class="block-header">
-      <div><div class="eyebrow">03 · Atención</div><h2 class="section-title">Cosas que vale la pena revisar</h2></div>
-      <p class="section-desc">Cambios importantes detectados al comparar contra el mes pasado.</p>
-    </div>
-    <div class="insights">
-      <div class="insight good"><div class="insight-icon">🚀</div><div class="insight-title">Súper Reductivo: el nuevo líder</div><div class="insight-body">De 22 → <strong>45 pedidos este mes</strong> (+105%). Además <strong>los 13 pendientes de junio ya salieron</strong>, sumando <strong>58 pedidos totales</strong>. <span class="insight-stat">1200353877</span> es el producto #1 indiscutible. Pasó de novato a estrella en 60 días.</div></div>
-      <div class="insight bad"><div class="insight-icon">⚠</div><div class="insight-title">Creatina Gat principal desapareció</div><div class="insight-body"><span class="insight-stat">1156772999</span> pasó de 12 → <strong>0 pedidos</strong>. La variante <span class="insight-stat">1197609784</span> se llevó todo el mercado con 24 pedidos. Considera pausar la publicación principal o revisar por qué Liverpool ya no la muestra.</div></div>
-      <div class="insight bad"><div class="insight-icon">🔻</div><div class="insight-title">PeptoGluteo bajó fuerte</div><div class="insight-body">El líder histórico (<span class="insight-stat">1154626464</span>) pasó de <strong>56 → 18 pedidos</strong> (−68%). Sigue siendo #3, pero requiere atención: precio, foto, ranking, o competencia de otro seller.</div></div>
-      <div class="insight good"><div class="insight-icon">🌱</div><div class="insight-title">3 SKUs nuevos con debut</div><div class="insight-body">Este mes se activaron <span class="insight-stat">1202635691</span> Testrol Gold (2), <span class="insight-stat">1202635560</span> EAA+ hydration (1) y <span class="insight-stat">1202635756</span> Ashwagandha (1). Todos con potencial en la tendencia de suplementación funcional 2026.</div></div>
-      <div class="insight good"><div class="insight-icon">✓</div><div class="insight-title">Menos reembolsos</div><div class="insight-body">De 5 → <strong>3 reembolsos</strong> (−40%). Se mantiene la mejora en calidad de servicio del mes anterior.</div></div>
-      <div class="insight warn"><div class="insight-icon">📌</div><div class="insight-title">Ashwagandha e ISO 100 crecen</div><div class="insight-body">ISO 100 chocolate 3LB (<span class="insight-stat">1163803263</span>) subió de 1 → 8 pedidos. Reductor abdominal (<span class="insight-stat">1200119840</span>) también de 1 → 8. Dos productos que estaban quietos ya despiertan — mantén stock.</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="block">
-  <div class="container">
-    <div class="block-header">
-      <div><div class="eyebrow">04 · Detalle por publicación</div><h2 class="section-title">Todas tus publicaciones con ventas</h2></div>
-      <p class="section-desc">17 publicaciones generaron pedidos. <strong>Haz clic en cualquier fila</strong> para ver los pedidos individuales con su tracking.</p>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th><th>SKU</th><th>Producto</th>
-            <th class="num">Pedidos</th><th class="num">Venta bruta</th>
-            <th class="num">Cargos</th><th class="num">Neto seller</th>
-            <th class="center"></th>
-          </tr>
-        </thead>
-        <tbody id="productTable"></tbody>
-      </table>
-    </div>
-    <div class="nosales" style="margin-top: 24px;">
-      <div class="nosales-text"><strong>20 publicaciones sin ventas este mes.</strong><br><span style="font-size: 13px; color: var(--ink-2);">Productos nuevos por activar o catálogo viejo que necesita refresh.</span></div>
-      <details>
-        <summary>Ver SKUs sin ventas</summary>
-        <div class="nosales-list">
-          <span class="nosales-item">1134417966</span><span class="nosales-item">1142051369</span><span class="nosales-item">1156772999</span><span class="nosales-item">1195367619</span><span class="nosales-item">1195367597</span><span class="nosales-item">1190689103</span><span class="nosales-item">1186634485</span><span class="nosales-item">1161850639</span><span class="nosales-item">1127260415</span><span class="nosales-item">1199310298</span><span class="nosales-item">1199316113</span><span class="nosales-item">1154527318</span><span class="nosales-item">1200356841</span><span class="nosales-item">1200354954</span><span class="nosales-item">1200352498</span><span class="nosales-item">1200120520</span><span class="nosales-item">1199318388</span><span class="nosales-item">1202144957</span><span class="nosales-item">1202636019</span><span class="nosales-item">1202245401</span>
-        </div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<section class="block" style="background: white;">
-  <div class="container">
-    <div class="block-header">
-      <div><div class="eyebrow">05 · Reembolsos</div><h2 class="section-title">Devoluciones del mes</h2></div>
-      <p class="section-desc">3 reembolsos. Todos con producto entregado al cliente.</p>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Pedido</th><th>SKU</th><th>Producto</th><th>Status guía</th><th class="num">Pérdida</th><th class="center">Tracking</th></tr></thead>
-        <tbody id="refundTable"></tbody>
-      </table>
-    </div>
-    <p style="margin-top: 16px; font-size: 13px; color: var(--ink-2); max-width: 700px;">
-      <strong>¿Qué significa "Delivered" en un reembolso?</strong> El paquete sí llegó al cliente, pero solicitó reembolso y el producto no regresó al almacén. Liverpool no devuelve la comisión ni las retenciones en estos casos.
-    </p>
-
-    <!-- CALLOUT: Revisión de reembolsos de meses anteriores -->
-    <div style="margin-top: 24px; background: linear-gradient(135deg, #EEF1FA 0%, #FFFFFF 100%); border: 1px solid #9AAAD8; border-left: 4px solid #3D5AAF; border-radius: 12px; padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start;">
-      <div style="font-size: 28px; line-height: 1;">📌</div>
-      <div style="flex: 1;">
-        <h4 style="font-size: 15px; font-weight: 700; color: #3D5AAF; margin-bottom: 8px;">✓ Revisión de reembolsos de meses anteriores</h4>
-        <p style="font-size: 13px; color: var(--ink-2); line-height: 1.6; margin-bottom: 10px;">
-          Se ejecutó la revisión prometida: se detectaron <strong>32 reembolsos retroactivos</strong> de pedidos del mes 1 (abril-mayo). Ver detalle en la <strong>sección 05b</strong> abajo.
-        </p>
-        <p style="font-size: 13px; color: var(--ink-2); line-height: 1.6; margin-bottom: 10px;">
-          <strong style="color: var(--ink);">Plan a partir de agosto:</strong>
-        </p>
-        <ul style="font-size: 13px; color: var(--ink-2); line-height: 1.7; margin: 0 0 10px 18px; padding: 0;">
-          <li>El ajuste exacto de los 32 retroactivos se aplicará en el <strong>pago de agosto</strong> una vez se tenga el estado de cuenta oficial de Liverpool.</li>
-          <li>En el reporte de agosto se revisarán los pedidos entregados en <strong>julio y agosto</strong> para detectar nuevos reembolsos retrasados.</li>
-          <li>A partir de septiembre, la revisión será <strong>mes a mes</strong> como práctica estándar.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="block">
-  <div class="container">
-    <div class="block-header">
-      <div><div class="eyebrow">07 · Cargos del mes</div><h2 class="section-title">¿A dónde fue cada peso de tu venta bruta?</h2></div>
-      <p class="section-desc">De los $151,905 efectivos (incluye los 13 liberados del mes anterior), así se distribuyen los cargos.</p>
-    </div>
-    <div class="grid-2">
-      <div class="card"><div class="chart-wrap"><canvas id="cargos"></canvas></div></div>
-      <div class="card">
-        <h3 class="card-title">Tabla de cargos del mes</h3>
-        <table style="margin-top: 12px;">
-          <tbody>
-            <tr><td><strong>Venta efectiva</strong></td><td class="num strong">$151,904.51</td></tr><tr><td style="color: var(--brand-2);">Pendiente próx mes (no se paga aún)</td><td class="num" style="color: var(--brand-2);">$11,253.38</td></tr>
-            <tr><td>Comisión Liverpool (17%)</td><td class="num" style="color: var(--bad);">−$26,519.90</td></tr>
-            <tr><td>Retención IVA (8%)</td><td class="num" style="color: var(--bad);">−$12,479.87</td></tr>
-            <tr><td>Retención ISR (1%)</td><td class="num" style="color: var(--bad);">−$1,560.05</td></tr>
-            <tr><td>Envío real Estafeta</td><td class="num" style="color: var(--bad);">−$15,837.10</td></tr>
-            <tr><td>BIUBOX OP (operación)</td><td class="num" style="color: var(--bad);">−$5,400.00</td></tr>
-              <tr><td>Almacenamiento <span style="font-size: 11px; color: #00B894; font-weight: 700;">(GRATIS · temporada promocional)</span></td><td class="num" style="color: #00B894; font-weight: 700;">$0.00</td></tr>
-            <tr><td>Logística inversa</td><td class="num" style="color: var(--bad);">−$140.00</td></tr>
-            <tr style="background: var(--good-bg);"><td style="font-weight: 800;">Neto al seller</td><td class="num strong" style="color: var(--good); font-size: 16px;">$89,967.68</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="block" style="background: linear-gradient(135deg, #FFFBF0 0%, #FDF0F3 100%);">
-  <div class="container">
-    <div class="block-header">
-      <div><div class="eyebrow">08 · Crecimiento</div><h2 class="section-title">Categorías a incursionar (México 2026)</h2></div>
-      <p class="section-desc">Tendencias del mercado mexicano que complementan tu catálogo actual.</p>
-    </div>
-    <div class="insights">
-      <div class="insight good" style="border-left-color: #E17055;"><div class="insight-title">🌿 Colágeno hidrolizado</div><div class="insight-body">Top de tendencias 2026. Compra recurrente mensual. Marcas: Birdman, Healthy America, MDN. Público: mujeres 25-55.</div></div>
-      <div class="insight good" style="border-left-color: #E17055;"><div class="insight-title">💊 Magnesio bisglicinato</div><div class="insight-body">Boom por sueño/ansiedad/calambres. Compra mensual. Marcas: Solgar, NeoCell. Público: adultos 30+.</div></div>
-      <div class="insight good" style="border-left-color: #E17055;"><div class="insight-title">🐟 Omega 3 premium</div><div class="insight-body">Salud cardiovascular y cognitiva. Marcas: Now Foods, Solgar, Nordic Naturals. Público: adultos 35+.</div></div>
-      <div class="insight good" style="border-left-color: #E17055;"><div class="insight-title">🧘 Ashwagandha + adaptógenos</div><div class="insight-body">Crecimiento explosivo 2026 por estrés laboral. Marcas: KSM-66, Gaia Herbs. Público: adultos 25-50.</div></div>
-      <div class="insight good" style="border-left-color: #E17055;"><div class="insight-title">☀️ Vitamina D3 + K2</div><div class="insight-body">Deficiencia generalizada en México. Marcas: Now Foods, Sports Research, Solgar. Toda edad.</div></div>
-      <div class="insight good" style="border-left-color: #E17055;"><div class="insight-title">🌱 Proteína vegana</div><div class="insight-body">Tendencia plant-based. Marcas: Birdman Falcon, Naked Pea, Vega Sport.</div></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- SECCIÓN: REEMBOLSOS RETROACTIVOS - VERIFICADOS -->
+<!-- Reembolsos retroactivos -->
 <section class="block" style="background: linear-gradient(135deg, #FFF5F0 0%, #FFFFFF 100%);">
   <div class="container">
     <div class="block-header">
-      <div><div class="eyebrow">05b · Ajustes pendientes verificados</div><h2 class="section-title">⚠️ Reembolsos retroactivos · 3 pedidos a reintegrar</h2></div>
-      <p class="section-desc">Se detectaron reembolsos de pedidos anteriores. Ya se verificaron: 24 fueron descontados en su mes correspondiente, y <strong>3 pedidos requieren análisis específico</strong> según qué pasó con el producto físicamente (cliente se quedó, regresó al almacén, o en tránsito).</p>
+      <div class="eyebrow">02 · Ajustes retroactivos</div>
+      <h2 class="section-title">⚠️ 6 reembolsos retroactivos a descontar</h2>
+      <p class="section-desc">Reembolsos de pedidos que ya fueron pagados en meses anteriores y ahora aparecen reembolsados. Se descontarán del pago de agosto.</p>
     </div>
-
-    <!-- Desglose de los 32 -->
-    <div style="margin-bottom: 24px; padding: 20px 24px; background: white; border-radius: 12px; border: 1px solid #EEEEEE;">
-      <h4 style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 16px;">📊 Clasificación de los 32 reembolsos detectados</h4>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
-        <div style="padding: 16px; background: #F0FBF8; border-radius: 8px; border-left: 3px solid #00B894;">
-          <div style="font-size: 11px; color: var(--ink-2); font-weight: 600;">Ya descontados en su mes</div>
-          <div style="font-size: 26px; font-weight: 800; color: #00B894;">24</div>
-          <div style="font-size: 12px; color: var(--ink-3);">Venta $29,362</div>
-          <div style="font-size: 11px; color: var(--ink-3); margin-top: 4px;">Ya se manejaron en su momento</div>
-        </div>
-        
-        <div style="padding: 16px; background: #FFF0F0; border-radius: 8px; border-left: 3px solid #E17055;">
-          <div style="font-size: 11px; color: var(--ink-2); font-weight: 600;">A verificar/ajustar en agosto</div>
-          <div style="font-size: 26px; font-weight: 800; color: #E17055;">3</div>
-          <div style="font-size: 12px; color: var(--ink-3);">Venta $3,987.45</div>
-          <div style="font-size: 11px; color: var(--ink-3); margin-top: 4px;">⚠️ Pendiente</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tabla de los 3 pedidos que sí requieren ajuste -->
-    <div style="margin-bottom: 20px;">
-      <h4 style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 12px;">🎯 Análisis por caso · qué hacer con cada uno</h4>
-      
-      <!-- Explicación de casos -->
-      <div style="background: #F9F9F9; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; border-left: 3px solid #9AAAD8;">
-        <p style="font-size: 12px; color: var(--ink-2); line-height: 1.5; margin: 0;">
-          <strong style="color: var(--ink);">Reglas por caso:</strong><br>
-          • <strong>Cliente se quedó (Entregado + reembolso):</strong> el producto NO regresó al almacén. RIBEN reintegra la venta. NO se cobra guía inversa.<br>
-          • <strong>Regresó al almacén (Devuelto):</strong> el producto SÍ regresó y se puede revender. RIBEN NO reintegra la venta. SE COBRA guía inversa ($140) + envío perdido.<br>
-          • <strong>En tránsito:</strong> el paquete está en camino. Hay que esperar el status final antes de aplicar cualquier ajuste.
-        </p>
-      </div>
-      
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Pedido</th>
-              <th>SKU</th>
-              <th>Producto</th>
-              <th>Caso</th>
-              <th class="center">¿Producto regresó?</th>
-              <th class="center">Guía inversa</th>
-              <th class="num">Venta original</th>
-              <th class="num">Descuento estimado</th>
-            </tr>
-          </thead>
-          <tbody>
-        <tr>
-          <td class="sku-cell">4710113616</td>
-          <td class="sku-cell">1150659163</td>
-          <td class="product-name">ISO 100</td>
-          <td><span class="pill bad">Cliente se quedó</span></td>
-          <td class="center">❌ NO regresó</td>
-          <td class="center">❌ No aplica</td>
-          <td class="num">$998.21</td>
-          <td class="num strong" style="color: #D63031;">$572.38 — $998.21</td>
-        </tr>
-        <tr>
-          <td class="sku-cell">3310104931</td>
-          <td class="sku-cell">1156772999</td>
-          <td class="product-name">Creatina Gat</td>
-          <td><span class="pill bad">Cliente se quedó</span></td>
-          <td class="center">❌ NO regresó</td>
-          <td class="center">❌ No aplica</td>
-          <td class="num">$1,991.82</td>
-          <td class="num strong" style="color: #D63031;">$1,307.65 — $1,991.82</td>
-        </tr>
-        <tr>
-          <td class="sku-cell">0150104545</td>
-          <td class="sku-cell">1154626464</td>
-          <td class="product-name">PeptoGluteo</td>
-          <td><span class="pill warn">En tránsito · verificar</span></td>
-          <td class="center">❓ Por definir</td>
-          <td class="center">❓ Pendiente</td>
-          <td class="num">$997.42</td>
-          <td class="num strong" style="color: #FDCB6E;">Pendiente definir</td>
-        </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-<!-- Callout explicativo -->
-    <div style="background: linear-gradient(135deg, #EEF1FA 0%, #FFFFFF 100%); border: 1px solid #9AAAD8; border-left: 4px solid #3D5AAF; border-radius: 12px; padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start;">
-      <div style="font-size: 28px; line-height: 1;">✓</div>
-      <div style="flex: 1;">
-        <h4 style="font-size: 15px; font-weight: 700; color: #3D5AAF; margin-bottom: 8px;">¿Cómo se llegó a esta conclusión?</h4>
-        <p style="font-size: 13px; color: var(--ink-2); line-height: 1.6; margin-bottom: 10px;">
-          <strong style="color: var(--ink);">¿Qué es un reembolso retroactivo?</strong> Un pedido que estaba OK cuando se procesó el pago, y semanas después Liverpool lo marca como reembolsado. El ajuste depende de qué pasó con el producto físicamente:
-        </p>
-        <p style="font-size: 13px; color: var(--ink-2); line-height: 1.6; margin-bottom: 10px;">
-          Se compararon los 32 IDs contra los reportes históricos:
-        </p>
-        <ul style="font-size: 13px; color: var(--ink-2); line-height: 1.7; margin: 0 0 10px 18px; padding: 0;">
-          <li><strong>24 pedidos</strong> ya estaban reembolsados cuando se calculó su mes → ya se descontaron del pago en su momento. Sin acción.</li>
-          <li><strong>3 pedidos</strong> se pagaron a RIBEN como ventas completas en el mes 1. Ahora Liverpool los marca como reembolsados → RIBEN debe <strong>reintegrar el pago</strong> de esos pedidos, y se descontará del pago de agosto.</li>
-        </ul>
-        <p style="font-size: 13px; color: var(--ink-2); line-height: 1.6;">
-          Monto a descontar de agosto: <strong>hasta $3,987.45 (venta base)</strong>. El monto exacto se confirma con el estado de cuenta de liquidación de Liverpool.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECCIÓN: LIBERADOS DEL MES ANTERIOR + PENDIENTES DE ESTE MES -->
-<section class="block" style="background: linear-gradient(135deg, #F0FBF8 0%, #FFFFFF 100%);">
-  <div class="container">
-    <div class="block-header">
-      <div><div class="eyebrow">06 · Ajustes por pendientes</div><h2 class="section-title">Pendientes del mes anterior · liberados este mes</h2></div>
-      <p class="section-desc">Los 13 pedidos que quedaron pendientes de despacho al cierre de junio SÍ salieron: se enviaron el 30/junio y se entregaron entre el 1-4 de julio. Como el pago de junio ya se cerró con los datos que había, estos pedidos se contabilizan y se pagan en ESTE MES (julio) marcados como "liberados del mes anterior".</p>
-    </div>
-
-    <div class="kpis" style="margin-top: 0; padding-bottom: 24px;">
-      <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">Pedidos liberados</div>
-        <div class="kpi-value" style="color: #00B894;">13/13</div>
-        <div class="kpi-delta up" style="background: #F0FBF8; color: #00B894;">✓ Todos entregados</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">Venta liberada</div>
-        <div class="kpi-value" style="color: #00B894;">$12,568.50</div>
-        <div class="kpi-delta neutral">Ya cobrada a Liverpool</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">Neto adicional</div>
-        <div class="kpi-value" style="color: #00B894;">$7,220.19</div>
-        <div class="kpi-delta up" style="background: #F0FBF8; color: #00B894;">Se paga en julio</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">Servicio BIUBOX OP extra</div>
-        <div class="kpi-value" style="color: #3D5AAF;">$520.00</div>
-        <div class="kpi-delta neutral">13 × $40 operación</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">Servicio de Almacenamiento</div>
-        <div class="kpi-value" style="color: #00B894;">GRATIS</div>
-        <div class="kpi-delta up" style="background: #F0FBF8; color: #00B894;">Temporada promocional</div>
-      </div>
-    </div>
-
-    <div class="table-wrap">
+    
+    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">📅 De pedidos del mes 3 (26/jun - 26/jul)</h4>
+    <div class="table-wrap" style="margin-bottom: 24px;">
       <table>
         <thead>
           <tr>
             <th>Pedido</th>
-            <th>Fecha creación</th>
-            <th>Fecha entrega</th>
-            <th>Status</th>
+            <th>Fecha</th>
+            <th>SKU</th>
+            <th>Producto</th>
             <th class="num">Venta</th>
-            <th class="num">Cargos</th>
-            <th class="num">Neto</th>
-            <th class="center">Tracking</th>
           </tr>
         </thead>
         <tbody>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">3030170316</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">23/06/2026 - 11:49 AM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-01</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709633357&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">3270112570</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">23/06/2026 - 01:21 PM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-04</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709634501&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">1230113014</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">23/06/2026 - 02:54 PM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-02</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709635555&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">8810113058</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">23/06/2026 - 04:09 PM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-01</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2058709800610709636150&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">5130113183</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">23/06/2026 - 10:12 PM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-01</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2058709800610709637466&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">1480112893</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">24/06/2026 - 05:57 AM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-03</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709638015&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">3710112321</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">24/06/2026 - 07:36 AM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-04</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709638202&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">6590112877</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">24/06/2026 - 08:30 AM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-01</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709638317&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">6320112136</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">24/06/2026 - 08:52 AM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-01</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$359.01</td>
-          <td class="num strong" style="color: var(--good);">$538.73</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4208709800610T00464442&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">5480112537</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">24/06/2026 - 10:18 AM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-01</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709639212&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">2570112641</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">24/06/2026 - 10:43 AM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-01</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$359.01</td>
-          <td class="num strong" style="color: var(--good);">$538.73</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0208709800610T00464567&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">3530121335</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">24/06/2026 - 10:53 AM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-01</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$897.75</td>
-          <td class="num" style="color: var(--ink-2);">−$399.72</td>
-          <td class="num strong" style="color: var(--good);">$498.03</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8058709800610709639561&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-        <tr style="background: linear-gradient(90deg, #F0FBF8 0%, transparent 60%);">
-          <td class="sku-cell">1520112186</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-3);">24/06/2026 - 11:58 AM</td>
-          <td style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #00B894; font-weight: 600;">2026-07-01</td>
-          <td><span class="pill good">Entregado</span></td>
-          <td class="num">$1,795.50</td>
-          <td class="num" style="color: var(--ink-2);">−$633.13</td>
-          <td class="num strong" style="color: var(--good);">$1,162.37</td>
-          <td class="center"><a href="https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8058709800610709640277&isShipmentDetail=True" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a></td>
-        </tr>
-          <tr style="background: #F0FBF8; font-weight: 700;">
-            <td colspan="4" style="text-align: right; padding-right: 16px;">TOTAL liberado a pagar este mes:</td>
-            <td class="num strong">$12,568.50</td>
-            <td class="num strong" style="color: var(--bad);">−$5,348.31</td>
-            <td class="num strong" style="color: var(--good);">$7,220.19</td>
-            <td></td>
+          <tr>
+            <td class="sku-cell">3340115217</td>
+            <td>20/julio</td>
+            <td class="sku-cell">1163803263</td>
+            <td>ISO 100 chocolate 3LB</td>
+            <td class="num strong">$2,065.50</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">4010115348</td>
+            <td>22/julio</td>
+            <td class="sku-cell">1200353877</td>
+            <td>Súper Reductivo</td>
+            <td class="num strong">$897.75</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">2460114338</td>
+            <td>22/julio</td>
+            <td class="sku-cell">1135560371</td>
+            <td>Proteína fruity pebbles 2.3kg</td>
+            <td class="num strong">$2,968.63</td>
+          </tr>
+          <tr style="background: #FFF5F0; font-weight: 700;">
+            <td colspan="4" style="text-align: right;">Subtotal mes 3:</td>
+            <td class="num strong" style="color: var(--warn);">$5,931.88</td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <div style="margin-top: 24px; background: linear-gradient(135deg, #EEF1FA 0%, #FFFFFF 100%); border: 1px solid #9AAAD8; border-left: 4px solid #3D5AAF; border-radius: 12px; padding: 20px 24px; display: flex; gap: 16px; align-items: flex-start;">
-      <div style="font-size: 28px; line-height: 1;">✅</div>
-      <div style="flex: 1;">
-        <h4 style="font-size: 15px; font-weight: 700; color: #3D5AAF; margin-bottom: 8px;">Se ejecutó correctamente el proceso de revisión mensual</h4>
-        <p style="font-size: 13px; color: var(--ink-2); line-height: 1.6;">
-          Los 13 pedidos del Súper Reductivo que quedaron pendientes de despacho al cierre de junio se enviaron el 30 de junio y se entregaron entre el 1-4 de julio.
-          El pago de junio ya se había cerrado sin ellos (con los datos disponibles al 25/jun), así que se pagan en este mes junto con la venta regular de julio.
-          Aparecen marcados como "liberados del mes anterior" para trazabilidad. El monto adicional de $7,220.19 se suma al pago de RIBEN este mes, y el ingreso Servicio BIUBOX OP extra es $520 (13 × $40).
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECCIÓN: PENDIENTES DE ESTE MES (siguen esperando) -->
-<section class="block" style="background: linear-gradient(135deg, #FDF0F3 0%, #FFFFFF 100%);">
-  <div class="container">
-    <div class="block-header">
-      <div><div class="eyebrow">06b · Pendientes de envío</div><h2 class="section-title">Pedidos pendientes de envío</h2></div>
-      <p class="section-desc">Pedidos con guía generada este mes pero que aún no han salido del almacén. No se pagan aún — se evalúan el próximo mes cuando se confirme su envío.</p>
-    </div>
-
-    <div class="kpis" style="margin-top: 0; padding-bottom: 24px;">
-      <div class="kpi" style="border-left: 4px solid #E8A0B4;">
-        <div class="kpi-label">Pedidos por enviar</div>
-        <div class="kpi-value" style="color: #6079BF;">9</div>
-        <div class="kpi-delta neutral" style="background: #FDF0F3; color: #6079BF;">Esperan recolección de paquetería</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #E8A0B4;">
-        <div class="kpi-label">Monto retenido</div>
-        <div class="kpi-value" style="color: #6079BF;">$11,253</div>
-        <div class="kpi-delta neutral" style="background: #FDF0F3; color: #6079BF;">Venta potencial</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #E8A0B4;">
-        <div class="kpi-label">Productos involucrados</div>
-        <div class="kpi-value" style="color: #6079BF;">4</div>
-        <div class="kpi-delta neutral" style="background: #FDF0F3; color: #6079BF;">SKUs con guías pendientes</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #E8A0B4;">
-        <div class="kpi-label">Si todos se envían</div>
-        <div class="kpi-value" style="color: #00B894;">+$7,470</div>
-        <div class="kpi-delta up">Neto adicional próx mes</div>
-      </div>
-    </div>
-
+    
+    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">📅 De pedidos del mes 1 (Abr-May) — arrastre pendiente</h4>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
             <th>Pedido</th>
-            <th>Fecha generada</th>
+            <th>Fecha</th>
             <th>SKU</th>
             <th>Producto</th>
-            <th class="num">Venta potencial</th>
-            <th class="center">Tracking</th>
+            <th class="num">Venta</th>
           </tr>
         </thead>
-        <tbody id="pendientesTable"></tbody>
+        <tbody>
+          <tr>
+            <td class="sku-cell">4710113616</td>
+            <td>03/abril</td>
+            <td class="sku-cell">1150659163</td>
+            <td>ISO 100 fruity pebbles</td>
+            <td class="num strong">$998.21</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">3310104931</td>
+            <td>21/abril</td>
+            <td class="sku-cell">1156772999</td>
+            <td>Creatina Gat Sport 1kg</td>
+            <td class="num strong">$1,991.82</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">0150104545</td>
+            <td>21/abril</td>
+            <td class="sku-cell">1154626464</td>
+            <td>PeptoGluteo Mesoestetic</td>
+            <td class="num strong">$997.42</td>
+          </tr>
+          <tr style="background: #FFF5F0; font-weight: 700;">
+            <td colspan="4" style="text-align: right;">Subtotal mes 1:</td>
+            <td class="num strong" style="color: var(--warn);">$3,987.45</td>
+          </tr>
+          <tr style="background: linear-gradient(90deg, #E17055 0%, #FDCB6E 100%); color: white; font-weight: 800;">
+            <td colspan="4" style="text-align: right; color: white;">TOTAL a descontar en agosto:</td>
+            <td class="num strong" style="color: white; font-size: 15px;">$9,919.33</td>
+          </tr>
+        </tbody>
       </table>
-    </div>
-
-    <div style="margin-top: 20px; padding: 16px 20px; background: white; border-radius: 12px; border: 1px solid #EEEEEE; display: flex; gap: 16px; align-items: flex-start;">
-      <div style="font-size: 22px;">💡</div>
-      <div style="font-size: 13px; color: var(--ink-2); line-height: 1.6;">
-        <strong style="color: var(--ink);">¿Por qué están retenidos?</strong> Estos pedidos tienen guía generada, pero el paquete aún no ha sido recogido por la paquetería. Como no se ha realizado la entrega al cliente, no se paga aún al seller. <strong>El próximo mes se revisa el estado:</strong> si el paquete ya salió y fue entregado, se contabiliza y se paga — tal como acaba de suceder con los 13 pedidos del mes anterior (ver sección 06).
-      </div>
     </div>
   </div>
 </section>
 
->
-
-<!-- SECCIÓN: SERVICIOS FORO B -->
-<section class="block" style="background: linear-gradient(135deg, #F0FBF8 0%, #FFFFFF 100%);">
+<!-- Pedidos del mes 4 -->
+<section class="block" style="background: white;">
   <div class="container">
     <div class="block-header">
-      <div><div class="eyebrow">Servicios adicionales</div><h2 class="section-title">Servicios Foro B · disponibles próximamente</h2></div>
-      <p class="section-desc">Servicios adicionales que BIU SUPPLY ofrece para potenciar tus ventas. <strong>Actualmente todos están en $0</strong> — se te avisará antes de comenzar a cobrar cualquiera de ellos.</p>
+      <div class="eyebrow">03 · Ventas del mes 4</div>
+      <h2 class="section-title">🌱 23 pedidos nuevos (27/jul - 5/ago)</h2>
+      <p class="section-desc">Actividad del comienzo del mes 4. Se irá acumulando durante los próximos 21 días.</p>
     </div>
-
-    <div class="kpis" style="margin-top: 0; padding-bottom: 24px;">
-      <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">📸 Fotografía de Producto</div>
-        <div class="kpi-value" style="color: #00B894;">GRATIS</div>
-        <div class="kpi-delta neutral" style="background: #F0FBF8; color: #00B894;">Sesión profesional para nuevos productos</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">📝 Alta de Producto</div>
-        <div class="kpi-value" style="color: #00B894;">GRATIS</div>
-        <div class="kpi-delta neutral" style="background: #F0FBF8; color: #00B894;">Configuración de publicación en marketplace</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">🎬 Video para RRSS</div>
-        <div class="kpi-value" style="color: #00B894;">GRATIS</div>
-        <div class="kpi-delta neutral" style="background: #F0FBF8; color: #00B894;">Video corto para redes sociales</div>
-      </div>
-      <div class="kpi" style="border-left: 4px solid #00B894;">
-        <div class="kpi-label">🛍️ Live Shopping</div>
-        <div class="kpi-value" style="color: #00B894;">GRATIS</div>
-        <div class="kpi-delta neutral" style="background: #F0FBF8; color: #00B894;">Comisión sobre ventas por live</div>
-      </div>
+    
+    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">Top SKUs con actividad</h4>
+    <div class="table-wrap" style="margin-bottom: 24px;">
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Producto</th>
+            <th class="num">Pedidos</th>
+            <th class="num">Venta acumulada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="sku-cell">1200353877</td>
+            <td>Súper Reductivo Intenso 90 CAPS Generica</td>
+            <td class="num"><span class="pill good">7</span></td>
+            <td class="num strong">$6,239.36</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1163808311</td>
+            <td>Iso 100 Hydrolyzed Dymatize con proteína</td>
+            <td class="num"><span class="pill good">3</span></td>
+            <td class="num strong">$6,600.92</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1190398834</td>
+            <td>Reductivo Anticelulítico Mesoestetic con</td>
+            <td class="num"><span class="pill good">2</span></td>
+            <td class="num strong">$2,498.00</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1202635756</td>
+            <td>Ashwagandha 675 mg 90 caps Pure Nutritio</td>
+            <td class="num"><span class="pill good">2</span></td>
+            <td class="num strong">$1,759.60</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1163803263</td>
+            <td>Dymatize Hydrolyzed ISO 100 con proteína</td>
+            <td class="num"><span class="pill good">2</span></td>
+            <td class="num strong">$6,196.50</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1135560371</td>
+            <td>Proteína Dymatize sabor fruity pebbles d</td>
+            <td class="num"><span class="pill good">2</span></td>
+            <td class="num strong">$5,937.26</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1197609784</td>
+            <td>Creatina Gat Sport con Creatina Monohidr</td>
+            <td class="num"><span class="pill good">1</span></td>
+            <td class="num strong">$1,952.44</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1200119840</td>
+            <td>Reductor abdominal 90 caps generica con </td>
+            <td class="num"><span class="pill good">1</span></td>
+            <td class="num strong">$897.75</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1200352498</td>
+            <td>Proteína Ganador Peso WheyNer MASS MDN S</td>
+            <td class="num"><span class="pill good">1</span></td>
+            <td class="num strong">$1,701.00</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1195368020</td>
+            <td>Psychotic Insane Labz con creatina sabor</td>
+            <td class="num"><span class="pill good">1</span></td>
+            <td class="num strong">$1,259.10</td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1195367597</td>
+            <td>C4 Original Cellucor con creatina sabor </td>
+            <td class="num"><span class="pill good">1</span></td>
+            <td class="num strong">$863.10</td>
+          </tr>
+          <tr style="background: #F5F5F5; font-weight: 700;">
+            <td colspan="2" style="text-align: right;">TOTAL 23 pedidos:</td>
+            <td class="num strong">23</td>
+            <td class="num strong">$35,905.03</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    
+    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; margin-top: 24px;">🔍 Nuevos pedidos a vigilar (pendientes de envío)</h4>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Pedido</th>
+            <th>Fecha</th>
+            <th>SKU</th>
+            <th>Producto</th>
+            <th class="num">Venta</th>
+            <th class="center">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="sku-cell">8220116683</td>
+            <td>2026-08-04</td>
+            <td class="sku-cell">1195368020</td>
+            <td>Psychotic Insane Labz con creatina sabor</td>
+            <td class="num strong">$1,259.10</td>
+            <td class="center"><span class="pill warn">Por enviar</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">2110116972</td>
+            <td>2026-08-05</td>
+            <td class="sku-cell">1195367597</td>
+            <td>C4 Original Cellucor con creatina sabor </td>
+            <td class="num strong">$863.10</td>
+            <td class="center"><span class="pill warn">Por enviar</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 
-    <div style="padding: 16px 20px; background: white; border-radius: 12px; border: 1px solid #EEEEEE; display: flex; gap: 16px; align-items: flex-start;">
-      <div style="font-size: 22px;">ℹ️</div>
-      <div style="font-size: 13px; color: var(--ink-2); line-height: 1.6;">
-        <strong style="color: var(--ink);">¿Cuándo se activarán estos servicios?</strong> Cuando decidas contratarlos o cuando comencemos a cobrarlos como parte del paquete estándar. Se te notificará con anticipación y aparecerán en tu reporte con la tarifa correspondiente. Por ahora, todos permanecen en $0.
-      </div>
+<!-- Preview del pago -->
+<section class="block" style="background: linear-gradient(135deg, #EEF1FA 0%, #FFFFFF 100%);">
+  <div class="container">
+    <div class="block-header">
+      <div class="eyebrow">04 · Proyección</div>
+      <h2 class="section-title">💰 Preview del pago de agosto</h2>
+      <p class="section-desc">Balance provisional de los ajustes conocidos hasta hoy. Faltan las ventas nuevas del mes por consolidar.</p>
+    </div>
+    
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th class="num">Impacto en venta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>✅ 8 pendientes liberados de julio</td>
+            <td class="num strong" style="color: var(--good);">+$10,355.63</td>
+          </tr>
+          <tr>
+            <td>⚠️ 3 reembolsos retroactivos nuevos (mes 3)</td>
+            <td class="num strong" style="color: var(--bad);">−$5,931.88</td>
+          </tr>
+          <tr>
+            <td>⚠️ 3 reembolsos retroactivos del mes 1 (arrastre)</td>
+            <td class="num strong" style="color: var(--bad);">−$3,987.45</td>
+          </tr>
+          <tr>
+            <td>🟢 Ventas del mes 4 (27/jul - 5/ago)</td>
+            <td class="num strong" style="color: var(--good);">+$35,905.03</td>
+          </tr>
+          <tr>
+            <td style="color: var(--ink-3); font-style: italic;">+ ventas por acumular hasta el 26/ago</td>
+            <td class="num" style="color: var(--ink-3); font-style: italic;">por definir</td>
+          </tr>
+          <tr style="background: var(--liv-light); font-weight: 800;">
+            <td>Balance PARCIAL (venta)</td>
+            <td class="num strong" style="color: var(--liv-dark); font-size: 16px;">$36,341.33</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div style="margin-top: 20px; padding: 16px 20px; background: white; border-radius: 12px; border: 1px solid #EEE; border-left: 4px solid #3D5AAF;">
+      <strong style="color: var(--ink);">📌 Nota:</strong> Este es un preview con datos parciales. El pago definitivo se calculará al cierre del 26 de agosto con el neto real (aplicando comisión Liverpool, retenciones IVA/ISR, envíos reales y BIUBOX OP). Al llegar el estado de cuenta oficial de Liverpool se confirmarán los montos exactos de los reembolsos retroactivos.
     </div>
   </div>
 </section>
 
 <footer class="foot">
   <div class="container">
-    <div class="grid-2">
-      <div>
-        <h3>Sobre este reporte</h3>
-        <p>Generado a partir de los reportes oficiales de Liverpool y los costos reales de Estafeta.</p>
-        <p>Los cargos de comisión (17%), ISR (1%) e IVA (8%) son aplicados por Liverpool. El servicio BIUBOX es de $40 por pedido procesado más almacenamiento mensual.</p>
-      </div>
-      <div>
-        <h3>Cómo se manejan las devoluciones</h3>
-        <ul>
-          <li>Guía sin movimiento: el envío no salió del almacén. Sin cargos.</li>
-          <li>Devuelto al almacén: producto regresó, no es pérdida.</li>
-          <li>Reembolso con producto entregado: cliente se quedó con el producto. Pérdida real.</li>
-          <li>Tarifas reales: 167/167 guías cargadas desde Estafeta.</li>
-        </ul>
-      </div>
-    </div>
+    <div>BIU SUPPLY · Reporte intermedio de progreso · Cliente: RIBEN</div>
+    <div style="margin-top: 8px; opacity: 0.7;">Actualizado 06/agosto/2026 · Se actualizará conforme lleguen nuevos datos hasta el cierre 26/agosto</div>
   </div>
 </footer>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <div class="modal-title-block">
-        <span class="modal-sku-tag" id="modalSku"></span>
-        <h3 class="modal-title" id="modalProduct"></h3>
-        <div class="modal-stats" id="modalStats"></div>
-      </div>
-      <button class="close-btn" onclick="closeModal()" aria-label="Cerrar">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="order-summary-bar" id="modalSummary"></div>
-      <div class="modal-toolbar" id="modalFilters"></div>
-      <div id="ordersList"></div>
-    </div>
-  </div>
-</div>
-
-<script>
-
-// Traducciones de status de guía a español para mostrar al usuario
-const STATUS_ES = {
-  'Delivered': 'Entregado',
-  'Shipped': 'En camino',
-  'Created': 'En almacén',
-  'Returned': 'Devuelto',
-  'Canceled': 'Cancelado',
-  'Delivered at Origin': 'Devuelto al origen',
-  'Out for Delivery': 'En reparto',
-  'Picked Up': 'Recogido',
-  'Pendiente próx mes': 'Pendiente próx mes'
-};
-function trStatus(s) { return STATUS_ES[s] || s; }
-
-const PENDIENTES_LIPR = [{"id":"3240115088","sku":"1163808311","nombre":"Iso 100 Hydrolyzed Dymatize con proteína de suero de leche aislado sabor vainilla 3 LB","fecha":"24/07/2026 - 12:30 PM","venta_potencial":2279.18,"guia":"4208709800610T00486449"},{"id":"8930115254","sku":"1163808311","nombre":"Iso 100 Hydrolyzed Dymatize con proteína de suero de leche aislado sabor vainilla 3 LB","fecha":"26/07/2026 - 01:43 PM","venta_potencial":2276.18,"guia":"3058709800610709813794"},{"id":"7970115626","sku":"1190398834","nombre":"Reductivo Anticelulítico Mesoestetic con multivitaminico de 90 cápsulas","fecha":"24/07/2026 - 11:44 PM","venta_potencial":1249.0,"guia":"5208709800610T00486755"},{"id":"2930115836","sku":"1197609784","nombre":"Creatina Gat Sport con Creatina Monohidratada de 1 kg","fecha":"26/07/2026 - 01:44 AM","venta_potencial":978.22,"guia":"874884991340"},{"id":"6350116180","sku":"1200353877","nombre":"Súper Reductivo Intenso 90 CAPS Generica con mezcla hierbas","fecha":"24/07/2026 - 09:25 AM","venta_potencial":897.75,"guia":"3208709800610T00486195"},{"id":"6730115551","sku":"1200353877","nombre":"Súper Reductivo Intenso 90 CAPS Generica con mezcla hierbas","fecha":"24/07/2026 - 07:22 PM","venta_potencial":897.75,"guia":"7058709800610709810765"},{"id":"2530116581","sku":"1200353877","nombre":"Súper Reductivo Intenso 90 CAPS Generica con mezcla hierbas","fecha":"25/07/2026 - 10:14 PM","venta_potencial":897.75,"guia":"1058709800610709813313"},{"id":"5930115818","sku":"1200353877","nombre":"Súper Reductivo Intenso 90 CAPS Generica con mezcla hierbas","fecha":"26/07/2026 - 04:21 PM","venta_potencial":897.75,"guia":"0058709800610709814134"},{"id":"3300115459","sku":"1202635756","nombre":"Ashwagandha 675 mg 90 caps Pure Nutrition","fecha":"24/07/2026 - 01:11 PM","venta_potencial":879.8,"guia":"7208709800610T00486490"}];
-const DETALLE = {"1135560371":[{"id":"8230113325","fecha":"28/06/2026 - 03:37 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":2825.74,"venta_orig":2825.74,"venta":2825.74,"envio":126.3,"comision":480.38,"isr":28.26,"iva":226.06,"costo_op":40,"retorno":0,"bruto":900.99,"neto":1924.75,"guia":"1058709800610709659299","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=1058709800610709659299&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4720135106","fecha":"04/07/2026 - 03:15 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":2825.74,"venta_orig":2825.74,"venta":2825.74,"envio":126.3,"comision":480.38,"isr":28.26,"iva":226.06,"costo_op":40,"retorno":0,"bruto":900.99,"neto":1924.75,"guia":"7058709800610709696642","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709696642&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3380113542","fecha":"08/07/2026 - 05:35 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":2825.74,"venta_orig":2825.74,"venta":2825.74,"envio":85.6,"comision":480.38,"isr":28.26,"iva":226.06,"costo_op":40,"retorno":0,"bruto":860.29,"neto":1965.45,"guia":"9208709800610T00474958","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9208709800610T00474958&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2460114338","fecha":"22/07/2026 - 05:14 PM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Shipped","cant":1,"precio_unit":2968.63,"venta_orig":2968.63,"venta":2968.63,"envio":85.6,"comision":504.67,"isr":29.69,"iva":237.49,"costo_op":40,"retorno":0,"bruto":897.44,"neto":2071.19,"guia":"9208709800610T00485220","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9208709800610T00485220&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1150659163":[{"id":"2420113649","fecha":"09/07/2026 - 08:00 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":1991.82,"venta_orig":1991.82,"venta":1991.82,"envio":126.3,"comision":338.61,"isr":19.92,"iva":159.35,"costo_op":40,"retorno":0,"bruto":684.17,"neto":1307.65,"guia":"7058709800610709727648","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709727648&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1154626464":[{"id":"5620112600","fecha":"26/06/2026 - 02:13 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":138,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":437.33,"neto":560.09,"guia":"3058709800610709654144","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3058709800610709654144&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5890113172","fecha":"27/06/2026 - 03:27 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":138,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":437.33,"neto":560.09,"guia":"7208709800610T00466850","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7208709800610T00466850&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6590113170","fecha":"27/06/2026 - 10:24 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":138,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":437.33,"neto":560.09,"guia":"6208709800610T00466940","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6208709800610T00466940&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0510113363","fecha":"28/06/2026 - 08:47 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":2,"precio_unit":997.42,"venta_orig":1994.84,"venta":1994.84,"envio":126.3,"comision":339.12,"isr":19.95,"iva":159.59,"costo_op":40,"retorno":0,"bruto":684.96,"neto":1309.88,"guia":"3058709800610709659835","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3058709800610709659835&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5090112821","fecha":"29/06/2026 - 11:08 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":126.3,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":425.63,"neto":571.79,"guia":"8058709800610709662656","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8058709800610709662656&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6910113799","fecha":"29/06/2026 - 02:27 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":126.3,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":425.63,"neto":571.79,"guia":"4058709800610709665302","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4058709800610709665302&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0330113598","fecha":"29/06/2026 - 05:02 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":2,"precio_unit":997.42,"venta_orig":1994.84,"venta":1994.84,"envio":126.3,"comision":339.12,"isr":19.95,"iva":159.59,"costo_op":40,"retorno":0,"bruto":684.96,"neto":1309.88,"guia":"9058709800610709667054","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709667054&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4680122812","fecha":"30/06/2026 - 07:26 AM","estado":"Reembolsado","estatus_soms":"CANC","status_guia":"Returned","cant":2,"precio_unit":997.42,"venta_orig":1994.84,"venta":0,"envio":85.6,"comision":0,"isr":0,"iva":0,"costo_op":40,"retorno":140,"bruto":265.6,"neto":-265.6,"guia":"5208709800610T00468317","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5208709800610T00468317&isShipmentDetail=True","is_refund":true,"producto_regreso":true,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2790113370","fecha":"01/07/2026 - 12:45 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":85.6,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":384.93,"neto":612.49,"guia":"5208709800610T00469161","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5208709800610T00469161&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5130113753","fecha":"01/07/2026 - 06:24 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":126.3,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":425.63,"neto":571.79,"guia":"8058709800610709681442","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8058709800610709681442&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0470176823","fecha":"02/07/2026 - 11:10 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":85.6,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":384.93,"neto":612.49,"guia":"7208709800610T00470234","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7208709800610T00470234&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0100113704","fecha":"02/07/2026 - 11:06 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":126.3,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":425.63,"neto":571.79,"guia":"8058709800610709688491","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8058709800610709688491&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0670113501","fecha":"04/07/2026 - 08:52 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":126.3,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":425.63,"neto":571.79,"guia":"7058709800610709697057","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709697057&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2990113405","fecha":"05/07/2026 - 02:16 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":126.3,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":425.63,"neto":571.79,"guia":"6058709800610709697821","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709697821&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"1540113355","fecha":"06/07/2026 - 11:33 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":126.3,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":425.63,"neto":571.79,"guia":"9058709800610709700973","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709700973&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6260113819","fecha":"07/07/2026 - 05:09 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":126.3,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":425.63,"neto":571.79,"guia":"6058709800610709714141","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709714141&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0570114056","fecha":"09/07/2026 - 08:13 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":997.42,"venta_orig":997.42,"venta":997.42,"envio":126.3,"comision":169.56,"isr":9.97,"iva":79.79,"costo_op":40,"retorno":0,"bruto":425.63,"neto":571.79,"guia":"5058709800610709727663","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709727663&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2130113639","fecha":"10/07/2026 - 08:51 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":998.21,"venta_orig":998.21,"venta":998.21,"envio":126.3,"comision":169.7,"isr":9.98,"iva":79.86,"costo_op":40,"retorno":0,"bruto":425.83,"neto":572.38,"guia":"7058709800610709733743","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709733743&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1163803263":[{"id":"2380113735","fecha":"09/07/2026 - 08:24 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":2065.5,"venta_orig":2065.5,"venta":2065.5,"envio":126.3,"comision":351.14,"isr":20.66,"iva":165.24,"costo_op":40,"retorno":0,"bruto":703.33,"neto":1362.17,"guia":"4058709800610709727678","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4058709800610709727678&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6480115025","fecha":"16/07/2026 - 12:48 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":2065.5,"venta_orig":2065.5,"venta":2065.5,"envio":126.3,"comision":351.14,"isr":20.66,"iva":165.24,"costo_op":40,"retorno":0,"bruto":703.33,"neto":1362.17,"guia":"8058709800610709759450","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8058709800610709759450&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3480114306","fecha":"19/07/2026 - 03:45 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":2065.5,"venta_orig":2065.5,"venta":2065.5,"envio":126.3,"comision":351.14,"isr":20.66,"iva":165.24,"costo_op":40,"retorno":0,"bruto":703.33,"neto":1362.17,"guia":"7058709800610709775644","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709775644&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3340115217","fecha":"20/07/2026 - 11:24 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":2065.5,"venta_orig":2065.5,"venta":2065.5,"envio":126.3,"comision":351.14,"isr":20.66,"iva":165.24,"costo_op":40,"retorno":0,"bruto":703.33,"neto":1362.17,"guia":"2058709800610709779031","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2058709800610709779031&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"7830114930","fecha":"20/07/2026 - 03:32 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":2065.5,"venta_orig":2065.5,"venta":2065.5,"envio":85.6,"comision":351.14,"isr":20.66,"iva":165.24,"costo_op":40,"retorno":0,"bruto":662.63,"neto":1402.87,"guia":"3208709800610T00483243","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3208709800610T00483243&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8720115056","fecha":"21/07/2026 - 10:49 AM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Shipped","cant":1,"precio_unit":2065.5,"venta_orig":2065.5,"venta":2065.5,"envio":126.3,"comision":351.14,"isr":20.66,"iva":165.24,"costo_op":40,"retorno":0,"bruto":703.33,"neto":1362.17,"guia":"5058709800610709786714","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709786714&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8330114808","fecha":"21/07/2026 - 09:51 PM","estado":"Para recoger","estatus_soms":"RALM","status_guia":"Delivered","cant":1,"precio_unit":2065.5,"venta_orig":2065.5,"venta":2065.5,"envio":126.3,"comision":351.14,"isr":20.66,"iva":165.24,"costo_op":40,"retorno":0,"bruto":703.33,"neto":1362.17,"guia":"6058709800610709791536","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709791536&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5510115208","fecha":"22/07/2026 - 01:11 PM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Shipped","cant":1,"precio_unit":2065.5,"venta_orig":2065.5,"venta":2065.5,"envio":85.6,"comision":351.14,"isr":20.66,"iva":165.24,"costo_op":40,"retorno":0,"bruto":662.63,"neto":1402.87,"guia":"6208709800610T00484901","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6208709800610T00484901&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1163808311":[{"id":"2900113073","fecha":"04/07/2026 - 03:28 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":2223.9,"venta_orig":2223.9,"venta":2223.9,"envio":126.3,"comision":378.06,"isr":22.24,"iva":177.91,"costo_op":40,"retorno":0,"bruto":744.51,"neto":1479.39,"guia":"0058709800610709696674","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0058709800610709696674&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3240115088","fecha":"24/07/2026 - 12:30 PM","estado":"Pendiente de envío","estatus_soms":"LIPR","status_guia":"Created","cant":1,"precio_unit":2279.18,"venta_orig":2279.18,"venta":0,"envio":0,"comision":0,"isr":0,"iva":0,"costo_op":0,"retorno":0,"bruto":0,"neto":0,"guia":"4208709800610T00486449","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4208709800610T00486449&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":true,"reemb_canc":false,"pendiente_lipr":true},{"id":"8930115254","fecha":"26/07/2026 - 01:43 PM","estado":"Pendiente de envío","estatus_soms":"LIPR","status_guia":"Created","cant":1,"precio_unit":2276.18,"venta_orig":2276.18,"venta":0,"envio":0,"comision":0,"isr":0,"iva":0,"costo_op":0,"retorno":0,"bruto":0,"neto":0,"guia":"3058709800610709813794","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3058709800610709813794&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":true,"reemb_canc":false,"pendiente_lipr":true}],"1190398834":[{"id":"5710112602","fecha":"26/06/2026 - 08:33 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"","cant":1,"precio_unit":1149.08,"venta_orig":1149.08,"venta":1149.08,"envio":138,"comision":195.34,"isr":11.49,"iva":91.93,"costo_op":40,"retorno":0,"bruto":476.76,"neto":672.32,"guia":"2058709800610709650816","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2058709800610709650816&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3390112249","fecha":"27/06/2026 - 09:18 PM","estado":"Reembolsado","estatus_soms":"CANC","status_guia":"","cant":1,"precio_unit":1149.08,"venta_orig":1149.08,"venta":-1149.08,"envio":138,"comision":195.34,"isr":11.49,"iva":91.93,"costo_op":40,"retorno":0,"bruto":476.76,"neto":-1625.84,"guia":"3058709800610709658369","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3058709800610709658369&isShipmentDetail=True","is_refund":true,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5300113288","fecha":"28/06/2026 - 04:46 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":1149.08,"venta_orig":1149.08,"venta":1149.08,"envio":85.6,"comision":195.34,"isr":11.49,"iva":91.93,"costo_op":40,"retorno":0,"bruto":424.36,"neto":724.72,"guia":"4208709800610T00467158","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4208709800610T00467158&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5290113473","fecha":"05/07/2026 - 05:03 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":1249.0,"envio":85.6,"comision":212.33,"isr":12.49,"iva":99.92,"costo_op":40,"retorno":0,"bruto":450.34,"neto":798.66,"guia":"4208709800610T00472008","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4208709800610T00472008&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2450113675","fecha":"07/07/2026 - 12:15 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":1249.0,"envio":126.3,"comision":212.33,"isr":12.49,"iva":99.92,"costo_op":40,"retorno":0,"bruto":491.04,"neto":757.96,"guia":"6058709800610709710563","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709710563&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2760113666","fecha":"07/07/2026 - 07:54 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":1249.0,"envio":126.3,"comision":212.33,"isr":12.49,"iva":99.92,"costo_op":40,"retorno":0,"bruto":491.04,"neto":757.96,"guia":"2058709800610709714822","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2058709800610709714822&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"1280113386","fecha":"11/07/2026 - 02:19 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":1249.0,"envio":126.3,"comision":212.33,"isr":12.49,"iva":99.92,"costo_op":40,"retorno":0,"bruto":491.04,"neto":757.96,"guia":"0058709800610709735632","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0058709800610709735632&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"7060113933","fecha":"11/07/2026 - 10:05 PM","estado":"Para recoger","estatus_soms":"RALM","status_guia":"Delivered","cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":1249.0,"envio":85.6,"comision":212.33,"isr":12.49,"iva":99.92,"costo_op":40,"retorno":0,"bruto":450.34,"neto":798.66,"guia":"8208709800610T00476820","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8208709800610T00476820&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"1540113802","fecha":"11/07/2026 - 10:31 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":1249.0,"envio":85.6,"comision":212.33,"isr":12.49,"iva":99.92,"costo_op":40,"retorno":0,"bruto":450.34,"neto":798.66,"guia":"8208709800610T00476825","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8208709800610T00476825&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6340113985","fecha":"13/07/2026 - 02:20 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":1249.0,"envio":126.3,"comision":212.33,"isr":12.49,"iva":99.92,"costo_op":40,"retorno":0,"bruto":491.04,"neto":757.96,"guia":"7058709800610709742993","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709742993&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5350115146","fecha":"21/07/2026 - 04:03 PM","estado":"Enviado","estatus_soms":"VCTE","status_guia":NaN,"cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":1249.0,"envio":126.3,"comision":212.33,"isr":12.49,"iva":99.92,"costo_op":40,"retorno":0,"bruto":491.04,"neto":757.96,"guia":"8058709800610709790262","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8058709800610709790262&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"1391154551","fecha":"21/07/2026 - 08:02 PM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Shipped","cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":1249.0,"envio":85.6,"comision":212.33,"isr":12.49,"iva":99.92,"costo_op":40,"retorno":0,"bruto":450.34,"neto":798.66,"guia":"5208709800610T00484379","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5208709800610T00484379&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"7970115626","fecha":"24/07/2026 - 11:44 PM","estado":"Pendiente de envío","estatus_soms":"LIPR","status_guia":"Created","cant":1,"precio_unit":1249.0,"venta_orig":1249.0,"venta":0,"envio":0,"comision":0,"isr":0,"iva":0,"costo_op":0,"retorno":0,"bruto":0,"neto":0,"guia":"5208709800610T00486755","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5208709800610T00486755&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":true,"reemb_canc":false,"pendiente_lipr":true}],"1195212011":[{"id":"3750113987","fecha":"12/07/2026 - 10:20 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":1578.74,"venta_orig":1578.74,"venta":1578.74,"envio":85.6,"comision":268.39,"isr":15.79,"iva":126.3,"costo_op":40,"retorno":0,"bruto":536.07,"neto":1042.67,"guia":"0208709800610T00477036","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0208709800610T00477036&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1195367601":[{"id":"4850113264","fecha":"06/07/2026 - 10:03 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":862.41,"venta_orig":862.41,"venta":862.41,"envio":126.3,"comision":146.61,"isr":8.62,"iva":68.99,"costo_op":40,"retorno":0,"bruto":390.53,"neto":471.88,"guia":"0058709800610709707573","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0058709800610709707573&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1195368020":[{"id":"3350113789","fecha":"02/07/2026 - 01:12 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":824.64,"venta_orig":824.64,"venta":824.64,"envio":126.3,"comision":140.19,"isr":8.25,"iva":65.97,"costo_op":40,"retorno":0,"bruto":380.71,"neto":443.93,"guia":"3058709800610709682043","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3058709800610709682043&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1197609784":[{"id":"1130150816","fecha":"26/06/2026 - 09:59 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"","cant":1,"precio_unit":872.31,"venta_orig":872.31,"venta":872.31,"envio":138,"comision":148.29,"isr":8.72,"iva":69.78,"costo_op":40,"retorno":0,"bruto":404.8,"neto":467.51,"guia":"7058709800610709651295","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709651295&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"1460112839","fecha":"27/06/2026 - 09:48 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"","cant":1,"precio_unit":968.23,"venta_orig":968.23,"venta":968.23,"envio":138,"comision":164.6,"isr":9.68,"iva":77.46,"costo_op":40,"retorno":0,"bruto":429.74,"neto":538.49,"guia":"5058709800610709658382","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709658382&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0640112942","fecha":"30/06/2026 - 09:08 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":968.23,"venta_orig":968.23,"venta":968.23,"envio":126.3,"comision":164.6,"isr":9.68,"iva":77.46,"costo_op":40,"retorno":0,"bruto":418.04,"neto":550.19,"guia":"5058709800610709669659","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709669659&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3130113373","fecha":"03/07/2026 - 05:36 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":968.23,"venta_orig":968.23,"venta":968.23,"envio":126.3,"comision":164.6,"isr":9.68,"iva":77.46,"costo_op":40,"retorno":0,"bruto":418.04,"neto":550.19,"guia":"9058709800610709694388","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709694388&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"7220112554","fecha":"03/07/2026 - 05:51 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":968.23,"venta_orig":968.23,"venta":968.23,"envio":126.3,"comision":164.6,"isr":9.68,"iva":77.46,"costo_op":40,"retorno":0,"bruto":418.04,"neto":550.19,"guia":"4058709800610709694475","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4058709800610709694475&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"7050113458","fecha":"05/07/2026 - 12:02 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":968.23,"venta_orig":968.23,"venta":968.23,"envio":126.3,"comision":164.6,"isr":9.68,"iva":77.46,"costo_op":40,"retorno":0,"bruto":418.04,"neto":550.19,"guia":"1058709800610709697531","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=1058709800610709697531&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6400113383","fecha":"05/07/2026 - 12:41 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":2,"precio_unit":968.23,"venta_orig":1936.46,"venta":1936.46,"envio":311.3,"comision":329.2,"isr":19.36,"iva":154.92,"costo_op":40,"retorno":0,"bruto":854.78,"neto":1081.68,"guia":"0058709800610709697565","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0058709800610709697565&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5910114044","fecha":"05/07/2026 - 05:48 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":980.1,"venta_orig":980.1,"venta":980.1,"envio":126.3,"comision":166.62,"isr":9.8,"iva":78.41,"costo_op":40,"retorno":0,"bruto":421.13,"neto":558.97,"guia":"2058709800610709698073","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2058709800610709698073&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6120114670","fecha":"07/07/2026 - 11:12 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":980.1,"venta_orig":980.1,"venta":980.1,"envio":126.3,"comision":166.62,"isr":9.8,"iva":78.41,"costo_op":40,"retorno":0,"bruto":421.13,"neto":558.97,"guia":"5058709800610709714991","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709714991&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2350113461","fecha":"08/07/2026 - 12:54 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":980.1,"venta_orig":980.1,"venta":980.1,"envio":126.3,"comision":166.62,"isr":9.8,"iva":78.41,"costo_op":40,"retorno":0,"bruto":421.13,"neto":558.97,"guia":"5058709800610709715061","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709715061&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2020113353","fecha":"08/07/2026 - 07:26 PM","estado":"Para recoger","estatus_soms":"RALM","status_guia":"Delivered","cant":1,"precio_unit":980.1,"venta_orig":980.1,"venta":980.1,"envio":126.3,"comision":166.62,"isr":9.8,"iva":78.41,"costo_op":40,"retorno":0,"bruto":421.13,"neto":558.97,"guia":"9058709800610709721145","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709721145&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4280113979","fecha":"10/07/2026 - 10:07 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":980.1,"venta_orig":980.1,"venta":980.1,"envio":85.6,"comision":166.62,"isr":9.8,"iva":78.41,"costo_op":40,"retorno":0,"bruto":380.43,"neto":599.67,"guia":"6208709800610T00476500","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6208709800610T00476500&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5710113699","fecha":"11/07/2026 - 04:47 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":980.1,"venta_orig":980.1,"venta":980.1,"envio":126.3,"comision":166.62,"isr":9.8,"iva":78.41,"costo_op":40,"retorno":0,"bruto":421.13,"neto":558.97,"guia":"2058709800610709735891","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2058709800610709735891&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2140113722","fecha":"11/07/2026 - 10:48 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":998.21,"venta_orig":998.21,"venta":998.21,"envio":85.6,"comision":169.7,"isr":9.98,"iva":79.86,"costo_op":40,"retorno":0,"bruto":385.13,"neto":613.08,"guia":"0208709800610T00476829","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0208709800610T00476829&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5480113867","fecha":"12/07/2026 - 05:04 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":898.39,"venta_orig":898.39,"venta":898.39,"envio":126.3,"comision":152.73,"isr":8.98,"iva":71.87,"costo_op":40,"retorno":0,"bruto":399.88,"neto":498.51,"guia":"6058709800610709736808","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709736808&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8470114883","fecha":"12/07/2026 - 05:34 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":998.21,"venta_orig":998.21,"venta":998.21,"envio":126.3,"comision":169.7,"isr":9.98,"iva":79.86,"costo_op":40,"retorno":0,"bruto":425.83,"neto":572.38,"guia":"5058709800610709736851","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709736851&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6520114178","fecha":"13/07/2026 - 01:15 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":998.21,"venta_orig":998.21,"venta":998.21,"envio":85.6,"comision":169.7,"isr":9.98,"iva":79.86,"costo_op":40,"retorno":0,"bruto":385.13,"neto":613.08,"guia":"5208709800610T00477722","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5208709800610T00477722&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4960114644","fecha":"16/07/2026 - 02:27 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":989.21,"venta_orig":989.21,"venta":989.21,"envio":126.3,"comision":168.17,"isr":9.89,"iva":79.14,"costo_op":40,"retorno":0,"bruto":423.49,"neto":565.72,"guia":"2058709800610709763639","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2058709800610709763639&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5460114511","fecha":"17/07/2026 - 05:10 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":989.21,"venta_orig":989.21,"venta":989.21,"envio":126.3,"comision":168.17,"isr":9.89,"iva":79.14,"costo_op":40,"retorno":0,"bruto":423.49,"neto":565.72,"guia":"7058709800610709771820","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709771820&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5580114590","fecha":"19/07/2026 - 01:53 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":979.22,"venta_orig":979.22,"venta":979.22,"envio":126.3,"comision":166.47,"isr":9.79,"iva":78.34,"costo_op":40,"retorno":0,"bruto":420.9,"neto":558.32,"guia":"9058709800610709775525","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709775525&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4000114893","fecha":"20/07/2026 - 09:12 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":979.22,"venta_orig":979.22,"venta":979.22,"envio":126.3,"comision":166.47,"isr":9.79,"iva":78.34,"costo_op":40,"retorno":0,"bruto":420.9,"neto":558.32,"guia":"2058709800610709784660","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2058709800610709784660&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5820115480","fecha":"21/07/2026 - 10:50 PM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Out for Delivery","cant":1,"precio_unit":979.22,"venta_orig":979.22,"venta":979.22,"envio":126.3,"comision":166.47,"isr":9.79,"iva":78.34,"costo_op":40,"retorno":0,"bruto":420.9,"neto":558.32,"guia":"7058709800610709791644","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709791644&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0190114784","fecha":"23/07/2026 - 08:41 PM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Shipped","cant":1,"precio_unit":978.22,"venta_orig":978.22,"venta":978.22,"envio":126.3,"comision":166.3,"isr":9.78,"iva":78.26,"costo_op":40,"retorno":0,"bruto":420.64,"neto":557.58,"guia":"7058709800610709804349","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709804349&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2930115836","fecha":"26/07/2026 - 01:44 AM","estado":"Pendiente de envío","estatus_soms":"LIPR","status_guia":"Created","cant":1,"precio_unit":978.22,"venta_orig":978.22,"venta":0,"envio":0,"comision":0,"isr":0,"iva":0,"costo_op":0,"retorno":0,"bruto":0,"neto":0,"guia":"874884991340","tracking_url":"https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=874884991340&cntry_code=mx","is_refund":false,"producto_regreso":false,"sin_mov":true,"reemb_canc":false,"pendiente_lipr":true}],"1200119840":[{"id":"6420112767","fecha":"26/06/2026 - 11:18 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":138,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":411.42,"neto":486.33,"guia":"1208709800610T00466254","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=1208709800610T00466254&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4540142597","fecha":"30/06/2026 - 10:12 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"8208709800610T00468443","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8208709800610T00468443&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"7090113567","fecha":"30/06/2026 - 08:45 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":311.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":584.72,"neto":313.03,"guia":"6058709800610709675249","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709675249&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8180113644","fecha":"06/07/2026 - 11:59 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"0058709800610709701453","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0058709800610709701453&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"1040211768","fecha":"11/07/2026 - 11:36 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"8058709800610709734969","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8058709800610709734969&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8550114704","fecha":"12/07/2026 - 12:04 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":2,"precio_unit":897.75,"venta_orig":1795.5,"venta":1795.5,"envio":85.6,"comision":305.24,"isr":17.96,"iva":143.64,"costo_op":40,"retorno":0,"bruto":592.43,"neto":1203.07,"guia":"6208709800610T00476888","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6208709800610T00476888&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2840114285","fecha":"14/07/2026 - 12:31 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"1058709800610709749129","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=1058709800610709749129&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3610114481","fecha":"19/07/2026 - 01:52 AM","estado":"Para recoger","estatus_soms":"RALM","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"4058709800610709774863","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4058709800610709774863&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1200353877":[{"id":"8780114222","fecha":"02/07/2026 - 08:04 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"5058709800610709688162","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709688162&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2360113827","fecha":"02/07/2026 - 08:13 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"6058709800610709688171","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709688171&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8430113112","fecha":"02/07/2026 - 11:51 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":3,"precio_unit":897.75,"venta_orig":2693.25,"venta":2693.25,"envio":85.6,"comision":457.85,"isr":26.93,"iva":215.46,"costo_op":40,"retorno":0,"bruto":825.85,"neto":1867.41,"guia":"7208709800610T00470819","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7208709800610T00470819&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8050113053","fecha":"03/07/2026 - 11:14 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"3208709800610T00471561","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3208709800610T00471561&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6080113199","fecha":"04/07/2026 - 07:23 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"9058709800610709695137","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709695137&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3200113518","fecha":"05/07/2026 - 12:03 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"1058709800610709697239","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=1058709800610709697239&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2240113536","fecha":"05/07/2026 - 09:30 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"7058709800610709697410","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709697410&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3330113591","fecha":"05/07/2026 - 01:30 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"3058709800610709697677","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3058709800610709697677&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4380113913","fecha":"05/07/2026 - 03:13 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"9208709800610T00471988","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9208709800610T00471988&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4010113768","fecha":"05/07/2026 - 10:21 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"6208709800610T00472040","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6208709800610T00472040&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2770114259","fecha":"06/07/2026 - 12:35 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":118.0,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":391.42,"neto":506.33,"guia":"874009300753","tracking_url":"https://www.fedex.com/apps/fedextrack/index.html?tracknumbers=874009300753&cntry_code=mx","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"5391134652","fecha":"06/07/2026 - 10:15 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"5208709800610T00473441","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5208709800610T00473441&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4660113220","fecha":"07/07/2026 - 10:25 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"4208709800610T00473673","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4208709800610T00473673&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6850113922","fecha":"07/07/2026 - 11:55 AM","estado":"Reembolsado","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":-897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":-1256.76,"guia":"9208709800610T00473821","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9208709800610T00473821&isShipmentDetail=True","is_refund":true,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3260113856","fecha":"07/07/2026 - 10:43 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"6058709800610709714948","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709714948&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6280114332","fecha":"08/07/2026 - 08:17 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"9058709800610709721220","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709721220&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6050114083","fecha":"09/07/2026 - 11:10 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"9058709800610709723267","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9058709800610709723267&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4050114260","fecha":"09/07/2026 - 11:28 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":807.97,"venta_orig":807.97,"venta":807.97,"envio":126.3,"comision":137.35,"isr":8.08,"iva":64.64,"costo_op":40,"retorno":0,"bruto":376.37,"neto":431.6,"guia":"7058709800610709723508","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709723508&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"7650114438","fecha":"09/07/2026 - 11:59 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"7058709800610709723886","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709723886&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4710123670","fecha":"09/07/2026 - 03:25 PM","estado":"Para recoger","estatus_soms":"RALM","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"2208709800610T00475654","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2208709800610T00475654&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"1750185665","fecha":"09/07/2026 - 06:52 PM","estado":"Para recoger","estatus_soms":"RALM","status_guia":"Delivered","cant":2,"precio_unit":897.75,"venta_orig":1795.5,"venta":1795.5,"envio":85.6,"comision":305.24,"isr":17.96,"iva":143.64,"costo_op":40,"retorno":0,"bruto":592.43,"neto":1203.07,"guia":"2208709800610T00475791","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=2208709800610T00475791&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8760114288","fecha":"09/07/2026 - 09:51 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"6208709800610T00475836","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6208709800610T00475836&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0270169942","fecha":"10/07/2026 - 04:09 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"3058709800610709728210","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3058709800610709728210&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4340113886","fecha":"10/07/2026 - 09:58 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"4058709800610709728984","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=4058709800610709728984&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0570114107","fecha":"10/07/2026 - 01:23 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"0208709800610T00476220","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0208709800610T00476220&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"7690114444","fecha":"10/07/2026 - 01:48 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"7208709800610T00476236","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7208709800610T00476236&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"7090114238","fecha":"10/07/2026 - 07:58 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"5058709800610709733706","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709733706&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"1270161176","fecha":"11/07/2026 - 10:57 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"3208709800610T00476610","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3208709800610T00476610&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2670113589","fecha":"13/07/2026 - 03:14 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":2,"precio_unit":897.75,"venta_orig":1795.5,"venta":1795.5,"envio":126.3,"comision":305.24,"isr":17.96,"iva":143.64,"costo_op":40,"retorno":0,"bruto":633.13,"neto":1162.37,"guia":"8058709800610709743591","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=8058709800610709743591&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4960114367","fecha":"13/07/2026 - 06:48 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"7208709800610T00478211","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7208709800610T00478211&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"1770160271","fecha":"14/07/2026 - 03:07 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"6058709800610709750908","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=6058709800610709750908&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8930113918","fecha":"14/07/2026 - 09:35 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"3208709800610T00479043","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3208709800610T00479043&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"3030172025","fecha":"15/07/2026 - 06:26 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"0058709800610709753292","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0058709800610709753292&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2310114461","fecha":"16/07/2026 - 05:16 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"5208709800610T00479967","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5208709800610T00479967&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4760114661","fecha":"16/07/2026 - 06:49 AM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"0208709800610T00479974","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0208709800610T00479974&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"8110115491","fecha":"18/07/2026 - 08:30 AM","estado":"Para recoger","estatus_soms":"RALM","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"9208709800610T00481722","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9208709800610T00481722&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2930115317","fecha":"21/07/2026 - 10:24 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"5058709800610709791589","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709791589&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"2310115067","fecha":"22/07/2026 - 06:43 AM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Shipped","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"9208709800610T00484513","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9208709800610T00484513&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"4010115348","fecha":"22/07/2026 - 03:49 PM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Shipped","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":85.6,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":359.01,"neto":538.73,"guia":"3208709800610T00485129","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3208709800610T00485129&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"0240115339","fecha":"22/07/2026 - 05:29 PM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Shipped","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"5058709800610709797864","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=5058709800610709797864&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6320114666","fecha":"23/07/2026 - 05:46 PM","estado":"Enviado","estatus_soms":"VCTE","status_guia":"Shipped","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":897.75,"envio":126.3,"comision":152.62,"isr":8.98,"iva":71.82,"costo_op":40,"retorno":0,"bruto":399.72,"neto":498.03,"guia":"7058709800610709803958","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709803958&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6350116180","fecha":"24/07/2026 - 09:25 AM","estado":"Pendiente de envío","estatus_soms":"LIPR","status_guia":"Created","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":0,"envio":0,"comision":0,"isr":0,"iva":0,"costo_op":0,"retorno":0,"bruto":0,"neto":0,"guia":"3208709800610T00486195","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=3208709800610T00486195&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":true,"reemb_canc":false,"pendiente_lipr":true},{"id":"6730115551","fecha":"24/07/2026 - 07:22 PM","estado":"Pendiente de envío","estatus_soms":"LIPR","status_guia":"Created","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":0,"envio":0,"comision":0,"isr":0,"iva":0,"costo_op":0,"retorno":0,"bruto":0,"neto":0,"guia":"7058709800610709810765","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709810765&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":true,"reemb_canc":false,"pendiente_lipr":true},{"id":"2530116581","fecha":"25/07/2026 - 10:14 PM","estado":"Pendiente de envío","estatus_soms":"LIPR","status_guia":"Created","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":0,"envio":0,"comision":0,"isr":0,"iva":0,"costo_op":0,"retorno":0,"bruto":0,"neto":0,"guia":"1058709800610709813313","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=1058709800610709813313&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":true,"reemb_canc":false,"pendiente_lipr":true},{"id":"5930115818","fecha":"26/07/2026 - 04:21 PM","estado":"Pendiente de envío","estatus_soms":"LIPR","status_guia":"Created","cant":1,"precio_unit":897.75,"venta_orig":897.75,"venta":0,"envio":0,"comision":0,"isr":0,"iva":0,"costo_op":0,"retorno":0,"bruto":0,"neto":0,"guia":"0058709800610709814134","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0058709800610709814134&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":true,"reemb_canc":false,"pendiente_lipr":true}],"1202635560":[{"id":"3280113307","fecha":"07/07/2026 - 01:20 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":897.44,"venta_orig":897.44,"venta":897.44,"envio":126.3,"comision":152.56,"isr":8.97,"iva":71.8,"costo_op":40,"retorno":0,"bruto":399.63,"neto":497.81,"guia":"7058709800610709711487","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7058709800610709711487&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1202635691":[{"id":"4300112761","fecha":"29/06/2026 - 02:01 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":867.15,"venta_orig":867.15,"venta":867.15,"envio":126.3,"comision":147.42,"isr":8.67,"iva":69.37,"costo_op":40,"retorno":0,"bruto":391.76,"neto":475.39,"guia":"0058709800610709665163","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=0058709800610709665163&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false},{"id":"6960113000","fecha":"29/06/2026 - 08:01 PM","estado":"Recibido","estatus_soms":"ETOT","status_guia":"Delivered","cant":1,"precio_unit":867.15,"venta_orig":867.15,"venta":867.15,"envio":85.6,"comision":147.42,"isr":8.67,"iva":69.37,"costo_op":40,"retorno":0,"bruto":351.06,"neto":516.09,"guia":"9208709800610T00468179","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=9208709800610T00468179&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":false,"reemb_canc":false,"pendiente_lipr":false}],"1202635756":[{"id":"3300115459","fecha":"24/07/2026 - 01:11 PM","estado":"Pendiente de envío","estatus_soms":"LIPR","status_guia":"Created","cant":1,"precio_unit":879.8,"venta_orig":879.8,"venta":0,"envio":0,"comision":0,"isr":0,"iva":0,"costo_op":0,"retorno":0,"bruto":0,"neto":0,"guia":"7208709800610T00486490","tracking_url":"https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=7208709800610T00486490&isShipmentDetail=True","is_refund":false,"producto_regreso":false,"sin_mov":true,"reemb_canc":false,"pendiente_lipr":true}]};
-const PRODUCTOS = [{"sku":"1200353877","nombre":"Súper Reductivo Intenso","nuevo":false,"pedidos":41,"pendientes":4,"venta":38513.47,"neto":22036.97,"venta_pendiente":3591.0,"rank":1},{"sku":"1197609784","nombre":"Creatina Gat Sport (variante)","nuevo":false,"pedidos":23,"pendientes":1,"venta":23317.84,"neto":13343.99,"venta_pendiente":978.22,"rank":2},{"sku":"1154626464","nombre":"PeptoGluteo Mesoestetic","nuevo":false,"pedidos":18,"pendientes":0,"venta":18951.77,"neto":10977.9,"venta_pendiente":0,"rank":3},{"sku":"1190398834","nombre":"Reductivo Mesoestetic","nuevo":false,"pedidos":12,"pendientes":1,"venta":12390.08,"neto":6755.64,"venta_pendiente":1249.0,"rank":4},{"sku":"1163803263","nombre":"ISO 100 chocolate 3 LB","nuevo":false,"pedidos":8,"pendientes":0,"venta":16524.0,"neto":10978.76,"venta_pendiente":0,"rank":5},{"sku":"1200119840","nombre":"Reductor abdominal","nuevo":false,"pedidos":8,"pendientes":0,"venta":8079.75,"neto":4533.28,"venta_pendiente":0,"rank":6},{"sku":"1135560371","nombre":"Proteína fruity pebbles 2.3 kg","nuevo":false,"pedidos":4,"pendientes":0,"venta":11445.85,"neto":7886.14,"venta_pendiente":0,"rank":7},{"sku":"1202635691","nombre":"Testrol Gold Gat","nuevo":true,"pedidos":2,"pendientes":0,"venta":1734.3,"neto":991.48,"venta_pendiente":0,"rank":8},{"sku":"1150659163","nombre":"ISO 100 fruity pebbles 1.3 kg","nuevo":false,"pedidos":1,"pendientes":0,"venta":1991.82,"neto":1307.65,"venta_pendiente":0,"rank":9},{"sku":"1195368020","nombre":"Psychotic Insane Labz","nuevo":false,"pedidos":1,"pendientes":0,"venta":824.64,"neto":443.93,"venta_pendiente":0,"rank":10},{"sku":"1195367601","nombre":"C4 Cellucor frambuesa","nuevo":false,"pedidos":1,"pendientes":0,"venta":862.41,"neto":471.88,"venta_pendiente":0,"rank":11},{"sku":"1195212011","nombre":"Lipo 6 Día y Noche","nuevo":false,"pedidos":1,"pendientes":0,"venta":1578.74,"neto":1042.67,"venta_pendiente":0,"rank":12},{"sku":"1163808311","nombre":"Dymatize ISO 100 (nuevo)","nuevo":false,"pedidos":1,"pendientes":2,"venta":2223.9,"neto":1479.39,"venta_pendiente":4555.36,"rank":13},{"sku":"1202635560","nombre":"EAA+ hydration","nuevo":true,"pedidos":1,"pendientes":0,"venta":897.44,"neto":497.81,"venta_pendiente":0,"rank":14},{"sku":"1202635756","nombre":"Ashwagandha Pure Nutrition","nuevo":true,"pedidos":0,"pendientes":1,"venta":0,"neto":0,"venta_pendiente":879.8,"rank":15}];
-
-// Mapa de estado/status guía a tipo visual
-function getStatusInfo(status_guia, is_refund, producto_regreso, sin_mov, reemb_canc, pendiente_lipr) {
-  if (pendiente_lipr) return { pill: 'pending', label: 'Pendiente próx mes', rowClass: 'pending', tone: 'pending' };
-  if (reemb_canc) return { pill: 'neutral', label: 'Reemb + Canc', rowClass: 'canceled', tone: 'zero' };
-  if (producto_regreso) return { pill: 'info', label: trStatus(status_guia), rowClass: 'returned', tone: 'zero' };
-  if (is_refund) return { pill: 'bad', label: 'Reembolsado', rowClass: 'refund', tone: 'refund' };
-  if (sin_mov) return { pill: 'warn', label: trStatus(status_guia), rowClass: 'canceled', tone: 'zero' };
-  if (status_guia === 'Delivered') return { pill: 'good', label: 'Entregado', rowClass: '', tone: 'good' };
-  return { pill: 'neutral', label: trStatus(status_guia) || '—', rowClass: '', tone: 'good' };
-}
-
-function fmt(n) {
-  return '$' + n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-}
-
-let currentFilter = 'all';
-let currentSku = null;
-
-function openModal(sku) {
-  currentSku = sku;
-  const product = PRODUCTOS.find(p => p.sku === sku);
-  const pedidos = DETALLE[sku] || [];
-  
-  document.getElementById('modalSku').textContent = sku;
-  document.getElementById('modalProduct').textContent = product.nombre;
-  
-  // Stats del producto
-  const totalVenta = pedidos.reduce((s, p) => s + p.venta, 0);
-  const totalNeto = pedidos.reduce((s, p) => s + p.neto, 0);
-  const totalCargos = pedidos.reduce((s, p) => s + p.bruto, 0);
-  const totalCantidad = pedidos.reduce((s, p) => s + p.cant, 0);
-  
-  document.getElementById('modalStats').innerHTML = `
-    <span class="modal-stat"><strong>${pedidos.length}</strong> pedidos</span>
-    <span class="modal-stat"><strong>${totalCantidad}</strong> unidades vendidas</span>
-    <span class="modal-stat">Venta bruta: <strong>${fmt(totalVenta)}</strong></span>
-    <span class="modal-stat">Neto: <strong style="color: var(--good);">${fmt(totalNeto)}</strong></span>
-  `;
-  
-  // Resumen
-  const refunds = pedidos.filter(p => p.is_refund).length;
-  const cancelados = pedidos.filter(p => p.sin_mov && !p.pendiente_lipr).length;
-  const entregados = pedidos.filter(p => p.status_guia === 'Delivered' && !p.is_refund).length;
-  const enTransito = pedidos.filter(p => ['Shipped','Picked Up'].includes(p.status_guia) && !p.is_refund).length;
-  
-  const pendientes_mes = pedidos.filter(p => p.pendiente_lipr).length;
-  document.getElementById('modalSummary').innerHTML = `
-    <div class="osb-item"><div class="osb-label">Entregados</div><div class="osb-value good">${entregados}</div></div>
-    <div class="osb-item"><div class="osb-label">En tránsito</div><div class="osb-value">${enTransito}</div></div>
-    <div class="osb-item"><div class="osb-label">Reembolsos</div><div class="osb-value ${refunds>0?'bad':''}">${refunds}</div></div>
-    <div class="osb-item"><div class="osb-label">Cancelados</div><div class="osb-value">${cancelados}</div></div>
-    ${pendientes_mes > 0 ? `<div class="osb-item"><div class="osb-label">Pendientes próx mes</div><div class="osb-value" style="color: #6079BF;">${pendientes_mes}</div></div>` : ''}
-    <div class="osb-item"><div class="osb-label">Total cargos</div><div class="osb-value bad">${fmt(totalCargos)}</div></div>
-  `;
-  
-  // Filtros
-  const pendientes_count = pedidos.filter(p => p.pendiente_lipr).length;
-  const filtros = [
-    {key: 'all', label: 'Todos', count: pedidos.length},
-    {key: 'delivered', label: 'Entregados', count: entregados},
-    {key: 'transit', label: 'En tránsito', count: enTransito},
-    {key: 'refund', label: 'Reembolsos', count: refunds},
-    {key: 'canceled', label: 'Cancelados', count: cancelados},
-    {key: 'pending', label: 'Pendientes próx mes', count: pendientes_count},
-  ];
-  document.getElementById('modalFilters').innerHTML = filtros
-    .filter(f => f.count > 0 || f.key === 'all')
-    .map(f => `<button class="filter-chip ${currentFilter===f.key?'active':''}" onclick="setFilter('${f.key}')">${f.label} <span style="opacity:0.6">(${f.count})</span></button>`)
-    .join('');
-  
-  renderOrders();
-  document.getElementById('modalOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function setFilter(filter) {
-  currentFilter = filter;
-  // Update buttons
-  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  renderOrders();
-}
-
-function renderOrders() {
-  const pedidos = DETALLE[currentSku] || [];
-  let filtered = pedidos;
-  
-  if (currentFilter === 'delivered') filtered = pedidos.filter(p => p.status_guia === 'Delivered' && !p.is_refund && !p.pendiente_lipr);
-  else if (currentFilter === 'transit') filtered = pedidos.filter(p => ['Shipped','Picked Up'].includes(p.status_guia) && !p.is_refund && !p.pendiente_lipr);
-  else if (currentFilter === 'refund') filtered = pedidos.filter(p => p.is_refund);
-  else if (currentFilter === 'canceled') filtered = pedidos.filter(p => p.sin_mov && !p.pendiente_lipr);
-  else if (currentFilter === 'pending') filtered = pedidos.filter(p => p.pendiente_lipr);
-  
-  // Ordenar por fecha desc (más reciente primero) - usando string como está formateado dd/mm/yyyy
-  filtered = [...filtered].sort((a, b) => {
-    const parseDate = s => {
-      const m = s.match(/(\d{2})\/(\d{2})\/(\d{4})\s*-\s*(\d{2}):(\d{2})\s*(AM|PM)/);
-      if (!m) return 0;
-      let [_, d, mo, y, h, mi, ap] = m;
-      h = parseInt(h);
-      if (ap === 'PM' && h !== 12) h += 12;
-      if (ap === 'AM' && h === 12) h = 0;
-      return new Date(y, mo-1, d, h, parseInt(mi)).getTime();
-    };
-    return parseDate(b.fecha) - parseDate(a.fecha);
-  });
-  
-  const list = document.getElementById('ordersList');
-  
-  if (filtered.length === 0) {
-    list.innerHTML = '<p style="text-align:center; padding:40px; color:var(--ink-3);">No hay pedidos que coincidan con este filtro.</p>';
-    return;
-  }
-  
-  list.innerHTML = filtered.map(p => {
-    const info = getStatusInfo(p.status_guia, p.is_refund, p.producto_regreso, p.sin_mov, p.reemb_canc, p.pendiente_lipr);
-    const trackingBtn = p.tracking_url && p.tracking_url !== '' && p.tracking_url !== 'nan'
-      ? `<a href="${p.tracking_url}" target="_blank" rel="noopener" class="tracking-btn">📦 Tracking →</a>`
-      : `<button class="tracking-btn disabled" disabled title="Sin guía">📦 Sin guía</button>`;
-    
-    const netoFormatted = p.neto >= 0 ? fmt(p.neto) : '−' + fmt(Math.abs(p.neto));
-    const ventaDisplay = p.venta === 0 ? '<span style="color: var(--ink-3);">$0.00 (anulada)</span>' 
-                      : p.venta < 0 ? `<span style="color: var(--bad);">−${fmt(Math.abs(p.venta))}</span>`
-                      : fmt(p.venta);
-    
-    return `
-      <div class="order-row ${info.rowClass}">
-        <div>
-          <div class="order-id">#${p.id}</div>
-          <div class="order-date">${p.fecha}</div>
-        </div>
-        <div class="order-status-block">
-          <span class="pill ${info.pill}">${info.label}</span>
-          <span style="font-size:11px; color: var(--ink-3);">${p.estado} · ${p.cant} und × ${fmt(p.precio_unit)}</span>
-        </div>
-        <div style="text-align:right;">
-          <div class="order-net-label">Venta</div>
-          <div style="font-weight:600; font-variant-numeric: tabular-nums;">${ventaDisplay}</div>
-        </div>
-        <div style="text-align:right;">
-          <div class="order-net-label">Cargos</div>
-          <div style="font-weight:600; color: var(--ink-2); font-variant-numeric: tabular-nums;">${fmt(p.bruto)}</div>
-        </div>
-        <div style="text-align:right;">
-          <div class="order-net-label">Neto</div>
-          <div class="order-amount ${info.tone}">${netoFormatted}</div>
-        </div>
-        <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-end;">
-          ${trackingBtn}
-          ${p.guia ? `<div class="guia-num">${p.guia.substring(0, 16)}…</div>` : ''}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function closeModal(e) {
-  if (e && e.target !== e.currentTarget) return;
-  document.getElementById('modalOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-  currentSku = null;
-  currentFilter = 'all';
-}
-
-// ESC para cerrar
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeModal();
-});
-
-// LLENAR TABLA DE PRODUCTOS
-const tbody = document.getElementById('productTable');
-PRODUCTOS.forEach(p => {
-  const cargos = p.venta - p.neto;
-  const tr = document.createElement('tr');
-  tr.className = 'clickable';
-  tr.onclick = () => openModal(p.sku);
-  const rankClass = p.rank === 1 ? 'rank-1' : p.rank === 2 ? 'rank-2' : p.rank === 3 ? 'rank-3' : '';
-  const newBadge = p.nuevo ? '<span class="new-badge">NUEVO</span>' : '';
-  // Badge de pendientes si los tiene
-  const pendBadge = p.pendientes > 0
-    ? `<span class="pill" style="background: #FDF0F3; color: #6079BF; margin-left: 6px; font-weight: 700;" title="${p.pendientes} pedidos en espera por $${p.venta_pendiente.toFixed(2)}">+${p.pendientes} pend</span>`
-    : '';
-  tr.innerHTML = `
-    <td><span class="${rankClass}" style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">${String(p.rank).padStart(2, '0')}</span></td>
-    <td><span class="sku-cell">${p.sku}</span></td>
-    <td><div class="product-name-wrap"><span class="product-name">${p.nombre}</span>${newBadge}</div></td>
-    <td class="num"><span class="pill ${p.pedidos > 10 ? 'good' : 'neutral'}">${p.pedidos}</span>${pendBadge}</td>
-    <td class="num">${fmt(p.venta)}</td>
-    <td class="num" style="color: var(--ink-2);">−${fmt(cargos)}</td>
-    <td class="num strong" style="color: var(--good);">${fmt(p.neto)}</td>
-    <td class="center"><span class="arrow-icon">→</span></td>
-  `;
-  tbody.appendChild(tr);
-});
-
-// TABLA DE REEMBOLSOS
-const refundList = [
-  { pedido: '3390112249', sku: '1190398834', nombre: 'Reductivo Anticelulítico Mesoestetic con', loss: 178, status_guia: '' },
-  { pedido: '4680122812', sku: '1154626464', nombre: 'PeptoGluteo vitamina Mesoestetic cápsula', loss: 265.6, status_guia: 'Returned' },
-  { pedido: '6850113922', sku: '1200353877', nombre: 'Súper Reductivo Intenso 90 CAPS Generica', loss: 1256.76, status_guia: 'Delivered' },
-];
-const refundTbody = document.getElementById('refundTable');
-refundList.forEach(r => {
-  // Buscar tracking en el detalle
-  const orderDetail = (DETALLE[r.sku] || []).find(p => p.id === r.pedido);
-  const trackingUrl = orderDetail ? orderDetail.tracking_url : '';
-  const trackingBtn = trackingUrl
-    ? `<a href="${trackingUrl}" target="_blank" rel="noopener" class="tracking-btn">📦 Ver →</a>`
-    : `<button class="tracking-btn disabled" disabled>Sin guía</button>`;
-  const tr = document.createElement('tr');
-  tr.className = 'refund';
-  tr.innerHTML = `
-    <td class="sku-cell">${r.pedido}</td>
-    <td class="sku-cell">${r.sku}</td>
-    <td class="product-name">${r.nombre}</td>
-    <td><span class="pill bad">Entregado</span></td>
-    <td class="num strong" style="color: var(--bad);">−${fmt(r.loss)}</td>
-    <td class="center">${trackingBtn}</td>
-  `;
-  refundTbody.appendChild(tr);
-});
-// Total reembolsos
-const tr = document.createElement('tr');
-tr.style.background = 'var(--neutral-bg)';
-tr.style.fontWeight = '700';
-tr.innerHTML = `
-  <td colspan="4" style="text-align: right; padding-right: 16px;">Pérdida total por reembolsos:</td>
-  <td class="num strong" style="color: var(--bad);">−$1,700.36</td>
-  <td></td>
-`;
-refundTbody.appendChild(tr);
-
-// TABLA DE PENDIENTES PRÓXIMO MES
-const pendTbody = document.getElementById('pendientesTable');
-if (pendTbody) {
-  PENDIENTES_LIPR.forEach(p => {
-    const tracking_url = p.guia ? `https://cs.estafeta.com/es/Tracking/searchByGet?wayBill=${p.guia}&isShipmentDetail=True` : '';
-    const trackingBtn = tracking_url
-      ? `<a href="${tracking_url}" target="_blank" rel="noopener" class="tracking-btn">📦 Verificar →</a>`
-      : `<button class="tracking-btn disabled" disabled>Sin guía</button>`;
-    const tr = document.createElement('tr');
-    tr.style.background = 'linear-gradient(90deg, #FDF0F3 0%, transparent 80%)';
-    tr.innerHTML = `
-      <td class="sku-cell">${p.id}</td>
-      <td style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2);">${p.fecha}</td>
-      <td class="sku-cell">${p.sku}</td>
-      <td class="product-name">${p.nombre.length > 45 ? p.nombre.substring(0, 42) + '…' : p.nombre}</td>
-      <td class="num strong" style="color: #6079BF;">$${p.venta_potencial.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-      <td class="center">${trackingBtn}</td>
-    `;
-    pendTbody.appendChild(tr);
-  });
-  // Total
-  const totalPend = PENDIENTES_LIPR.reduce((s, p) => s + p.venta_potencial, 0);
-  const trTotal = document.createElement('tr');
-  trTotal.style.background = '#FDF0F3';
-  trTotal.style.fontWeight = '700';
-  trTotal.innerHTML = `
-    <td colspan="4" style="text-align: right; padding-right: 16px;">Monto total pendiente próx mes:</td>
-    <td class="num strong" style="color: #6079BF;">$${totalPend.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-    <td></td>
-  `;
-  pendTbody.appendChild(trTotal);
-}
-
-
-// CHARTS
-Chart.defaults.font.family = "'Inter', sans-serif";
-Chart.defaults.font.size = 12;
-Chart.defaults.color = '#555555';
-Chart.defaults.borderColor = '#EEEEEE';
-
-const top10 = PRODUCTOS.slice(0, 10);
-new Chart(document.getElementById('topNeto'), {
-  type: 'bar',
-  data: {
-    labels: top10.map(p => p.nombre.length > 25 ? p.nombre.slice(0,22)+'…' : p.nombre),
-    datasets: [{
-      label: 'Neto al seller',
-      data: top10.map(p => p.neto),
-      backgroundColor: ['#3D5AAF','#463793','#6079BF','#9AAAD8','#0084FF','#E8A0B4','#00B894','#FDCB6E','#E17055','#6079BF'],
-      borderRadius: 6,
-      borderSkipped: false,
-    }]
-  },
-  options: {
-    indexAxis: 'y', maintainAspectRatio: false,
-    onClick: (e, els) => { if (els.length > 0) openModal(top10[els[0].index].sku); },
-    onHover: (e, els) => { e.native.target.style.cursor = els.length > 0 ? 'pointer' : 'default'; },
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => `Neto: ${fmt(ctx.raw)} · Clic para ver pedidos`,
-          title: (ctx) => top10[ctx[0].dataIndex].nombre
-        }
-      }
-    },
-    scales: {
-      x: { ticks: { callback: (v) => '$' + (v/1000) + 'k' }, grid: { color: '#F7F7F7' } },
-      y: { grid: { display: false }, ticks: { font: { size: 11 } } }
-    }
-  }
-});
-
-const top6 = PRODUCTOS.slice(0, 6);
-const otros = PRODUCTOS.slice(6).reduce((s, p) => s + p.pedidos, 0);
-new Chart(document.getElementById('distribucion'), {
-  type: 'doughnut',
-  data: {
-    labels: [...top6.map(p => p.nombre.length > 22 ? p.nombre.slice(0,20)+'…' : p.nombre), 'Otros (11 SKUs)'],
-    datasets: [{
-      data: [...top6.map(p => p.pedidos), otros],
-      backgroundColor: ['#3D5AAF','#6079BF','#E8A0B4','#9AAAD8','#0084FF','#00B894','#BBBBBB'],
-      borderWidth: 3, borderColor: '#ffffff'
-    }]
-  },
-  options: {
-    maintainAspectRatio: false, cutout: '60%',
-    onClick: (e, els) => { if (els.length > 0 && els[0].index < 6) openModal(top6[els[0].index].sku); },
-    onHover: (e, els) => { e.native.target.style.cursor = els.length > 0 && els[0].index < 6 ? 'pointer' : 'default'; },
-    plugins: {
-      legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12, font: { size: 11 } } },
-      tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw} pedidos (${((ctx.raw/122)*100).toFixed(1)}%)` } }
-    }
-  }
-});
-
-new Chart(document.getElementById('cargos'), {
-  type: 'bar',
-  data: {
-    labels: ['Composición de la venta bruta'],
-    datasets: [
-      { label: 'Neto al seller', data: [89967.68], backgroundColor: '#00B894', borderRadius: 4 },
-      { label: 'Comisión Liverpool (17%)', data: [26519.9], backgroundColor: '#D63031', borderRadius: 4 },
-      { label: 'Envío Estafeta', data: [15837.1], backgroundColor: '#E17055', borderRadius: 4 },
-      { label: 'Ret. IVA (8%)', data: [12479.87], backgroundColor: '#FDCB6E', borderRadius: 4 },
-      { label: 'BIUBOX OP', data: [5400], backgroundColor: '#3D5AAF', borderRadius: 4 },
-      { label: 'Ret. ISR (1%)', data: [1560.05], backgroundColor: '#463793', borderRadius: 4 },
-      { label: 'Logística inversa', data: [140], backgroundColor: '#636E72', borderRadius: 4 },
-    ]
-  },
-  options: {
-    indexAxis: 'y', maintainAspectRatio: false,
-    plugins: {
-      legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } },
-      tooltip: {
-        callbacks: {
-          label: (ctx) => {
-            const total = 151904.51;
-            const pct = ((ctx.raw / total) * 100).toFixed(1);
-            return `${ctx.dataset.label}: ${fmt(ctx.raw)} (${pct}%)`;
-          }
-        }
-      }
-    },
-    scales: {
-      x: { stacked: true, ticks: { callback: (v) => '$' + (v/1000) + 'k' }, grid: { color: '#F7F7F7' } },
-      y: { stacked: true, grid: { display: false } }
-    }
-  }
-});
-</script>
 </body>
 </html>
