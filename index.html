@@ -366,25 +366,66 @@
     
     <!-- DESGLOSE INTERMEDIO -->
     <div style="background: white; border: 2px solid var(--liv-light); padding: 24px 28px; border-radius: 16px; margin-bottom: 20px;">
-      <h3 style="font-size: 14px; font-weight: 700; color: var(--liv-dark); text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px;">📊 Cálculo del total a pagar</h3>
-      <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px 20px; font-size: 14px;">
-        <div style="color: var(--ink-2);">🏪 Neto BIU SUPPLY (tienda 2606)</div>
-        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--liv-dark);">+$117,066.43</div>
-        
-        <div style="color: var(--ink-2);">💗 Neto Pink Brule (tienda 7958)</div>
-        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--pink);">+$16,274.58</div>
-        
-        <div style="color: var(--ink); font-weight: 700; padding-top: 10px; border-top: 1px solid #EEE;">= Subtotal ventas</div>
-        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--ink); padding-top: 10px; border-top: 1px solid #EEE;">$133,341.01</div>
-        
-        <div style="color: var(--ink-2);">📦 − Almacenamiento BIUBOX (14 posiciones × $390)</div>
-        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--bad);">−$5,460.00</div>
-        
-        <div style="color: var(--ink-2);">🔄 − Reembolsos retroactivos (9 pedidos de meses anteriores)</div>
-        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--bad);">−$9,568.60</div>
-        
-        <div style="color: var(--ink); font-weight: 700; padding-top: 10px; border-top: 2px solid var(--liv-dark);">= TOTAL NETO A PAGAR A RIBEN</div>
-        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--liv-dark); font-size: 18px; padding-top: 10px; border-top: 2px solid var(--liv-dark);">$118,312.41</div>
+      <h3 style="font-size: 14px; font-weight: 700; color: var(--liv-dark); text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px;">📊 Cálculo del total a pagar con todos los costos asociados</h3>
+      
+      <!-- Paso 1: Venta bruta -->
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink-3); font-weight: 700; margin-bottom: 8px;">1. Venta bruta de los canales</div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; font-size: 13px; padding: 12px 14px; background: var(--liv-light); border-radius: 10px; margin-bottom: 12px;">
+        <div>🏪 BIU SUPPLY (tienda 2606)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600;">$189,269.69</div>
+        <div>💗 Pink Brule (tienda 7958)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600;">$28,850.78</div>
+        <div style="font-weight: 700; padding-top: 6px; border-top: 1px solid rgba(96,121,191,0.3);">= Venta bruta total</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--liv-dark); padding-top: 6px; border-top: 1px solid rgba(96,121,191,0.3);">$218,120.47</div>
+      </div>
+
+      <!-- Paso 2: Descuentos marketplace -->
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink-3); font-weight: 700; margin-bottom: 8px;">2. Cargos del marketplace Liverpool</div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; font-size: 13px; padding: 12px 14px; background: var(--red-bg); border-radius: 10px; margin-bottom: 12px;">
+        <div>Comisión Liverpool 17%</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--bad);">−$37,080.48</div>
+        <div>Retención IVA 8% al SAT</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--bad);">−$17,449.64</div>
+        <div>Retención ISR 1% al SAT</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--bad);">−$2,181.20</div>
+        <div style="font-weight: 700; padding-top: 6px; border-top: 1px solid rgba(214,48,49,0.2);">Subtotal cargos marketplace</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--bad); padding-top: 6px; border-top: 1px solid rgba(214,48,49,0.2);">−$56,711.32</div>
+      </div>
+
+      <!-- Paso 3: Servicios BIUBOX -->
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink-3); font-weight: 700; margin-bottom: 8px;">3. Servicios de BIUBOX (c/IVA incluido)</div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; font-size: 13px; padding: 12px 14px; background: var(--green-bg); border-radius: 10px; margin-bottom: 12px;">
+        <div style="padding-left: 0;">🚚 Consumo de guías</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--bad);">−$19,608.14</div>
+        <div style="padding-left: 20px; color: var(--ink-3); font-size: 12px;">↳ 🏪 BIU SUPPLY (159 guías Estafeta)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--ink-3); font-size: 12px;">−$15,838.14</div>
+        <div style="padding-left: 20px; color: var(--ink-3); font-size: 12px;">↳ 💗 Pink Brule (29 guías × $130)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--ink-3); font-size: 12px;">−$3,770.00</div>
+        <div>💻 Uso de plataforma (188 pedidos × $5)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--bad);">−$940.00</div>
+        <div>📦 Fulfillment y eSuite (188 pedidos × $40)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--bad);">−$7,520.00</div>
+        <div>📦 Almacenamiento (14 posiciones × $390)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--bad);">−$5,460.00</div>
+        <div style="font-weight: 700; padding-top: 6px; border-top: 1px solid rgba(0,184,148,0.3);">Subtotal servicios BIUBOX</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--good); padding-top: 6px; border-top: 1px solid rgba(0,184,148,0.3);">−$33,528.13</div>
+      </div>
+
+      <!-- Paso 4: Retroactivos -->
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--ink-3); font-weight: 700; margin-bottom: 8px;">4. Ajustes retroactivos</div>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; font-size: 13px; padding: 12px 14px; background: #FFF0F0; border-radius: 10px; margin-bottom: 16px;">
+        <div>🔄 Reembolsos de meses anteriores (9 pedidos)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; color: var(--bad);">−$9,568.60</div>
+      </div>
+
+      <!-- Resultado final -->
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px 20px; font-size: 15px; padding: 18px 22px; background: linear-gradient(135deg, var(--liv-dark), var(--liv)); color: white; border-radius: 12px;">
+        <div style="font-weight: 800; text-transform: uppercase; letter-spacing: 1px; font-size: 13px;">💰 TOTAL NETO A PAGAR A RIBEN</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 22px;">$118,312.41</div>
+      </div>
+      
+      <div style="margin-top: 14px; padding: 12px 16px; background: #FAFAFA; border-radius: 8px; font-size: 11px; color: var(--ink-3); line-height: 1.5;">
+        <strong style="color: var(--ink-2);">💡 Nota:</strong> El margen efectivo para RIBEN es de <strong>${f"{118312.41/218120.47*100:.1f}%"}</strong> sobre la venta bruta de $218,120.47. Los $133,341.01 que aparecen como "Neto por canal" en las tarjetas ya incluyen descontados Comisión, Retenciones, Consumo de guías, Uso de plataforma y Fulfillment & eSuite. Los descuentos adicionales (Almacenamiento y Retroactivos) se aplican al consolidado.
       </div>
     </div>
     
@@ -394,6 +435,171 @@
       <div style="font-size: 48px; font-weight: 800; letter-spacing: -1.5px; margin: 8px 0;">$118,312.41</div>
       <div style="font-size: 14px; opacity: 0.9;">$133,341.01 ventas − $5,460.00 almacenamiento − $9,568.60 retroactivos</div>
     </div>
+  </div>
+</section>
+
+
+<!-- SKUs NUEVOS Y ALTA DE PRODUCTOS -->
+<section class="block" style="background: linear-gradient(135deg, #FDF0F3 0%, #FFFFFF 100%);">
+  <div class="container">
+    <div class="block-header">
+      <div class="eyebrow">🆕 Catálogo y alta de productos</div>
+      <h2 class="section-title">🏷️ SKUs nuevos agregados al catálogo</h2>
+      <p class="section-desc">Durante este periodo se dieron de alta <strong>16 SKUs nuevos</strong> en el marketplace Liverpool. BIUBOX cubrió este alta como cortesía promocional (normalmente $120 MXN por SKU).</p>
+    </div>
+    
+    <div class="kpis">
+      <div class="kpi" style="border-left: 4px solid #E8A0B4;">
+        <div class="kpi-label">SKUs nuevos dados de alta</div>
+        <div class="kpi-value" style="color: #E8A0B4;">16</div>
+        <div class="kpi-delta neutral" style="background: #FDF0F3; color: #E8A0B4;">En el período Sep-Oct</div>
+      </div>
+      <div class="kpi" style="border-left: 4px solid var(--good);">
+        <div class="kpi-label">SKUs que ya venden</div>
+        <div class="kpi-value" style="color: var(--good);">5</div>
+        <div class="kpi-delta up">31% ya con ventas confirmadas</div>
+      </div>
+      <div class="kpi" style="border-left: 4px solid var(--warn);">
+        <div class="kpi-label">SKUs sin ventas aún</div>
+        <div class="kpi-value" style="color: var(--warn);">11</div>
+        <div class="kpi-delta neutral" style="background: #FFF9F0; color: var(--warn);">En catálogo esperando mover</div>
+      </div>
+      <div class="kpi" style="border-left: 4px solid var(--good);">
+        <div class="kpi-label">Neto generado por SKUs nuevos</div>
+        <div class="kpi-value" style="color: var(--good);">$7,730.79</div>
+        <div class="kpi-delta up">13 pedidos (Sep + Oct en curso)</div>
+      </div>
+    </div>
+    
+    <!-- Alta de productos -->
+    <div style="margin-top: 24px; padding: 24px 28px; background: white; border-radius: 16px; border: 2px solid var(--good);">
+      <h3 style="font-size: 16px; font-weight: 800; color: var(--good); margin: 0 0 16px;">💰 Alta de productos en Liverpool · Costo y ahorro</h3>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px 20px; font-size: 14px;">
+        <div style="color: var(--ink-2);">Tarifa normal de alta por SKU en Liverpool</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--ink);">$120.00 MXN</div>
+        
+        <div style="color: var(--ink-2);">× 16 SKUs nuevos dados de alta</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--ink);">× 16</div>
+        
+        <div style="color: var(--ink); font-weight: 700; padding-top: 10px; border-top: 1px solid #EEE;">= Costo normal del alta</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--ink); padding-top: 10px; border-top: 1px solid #EEE;">$1,920.00</div>
+        
+        <div style="color: var(--ink-2);">Costo cobrado por BIUBOX en este periodo</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--good);">$0.00 (GRATIS)</div>
+        
+        <div style="color: var(--good); font-weight: 700; padding-top: 10px; border-top: 2px solid var(--good);">💚 Ahorro para RIBEN (cortesía promocional)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--good); font-size: 16px; padding-top: 10px; border-top: 2px solid var(--good);">$1,920.00</div>
+      </div>
+    </div>
+    
+    <!-- Dinero generado -->
+    <div style="margin-top: 20px; padding: 24px 28px; background: white; border-radius: 16px; border: 2px solid var(--liv);">
+      <h3 style="font-size: 16px; font-weight: 800; color: var(--liv-dark); margin: 0 0 16px;">📈 Dinero generado por los SKUs nuevos</h3>
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px 20px; font-size: 14px;">
+        <div style="color: var(--ink-2);">📅 Septiembre (ya pagado en este cierre)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600;">$3,044.93 <span style="color: var(--ink-3); font-size: 12px;">(5 pedidos)</span></div>
+        
+        <div style="color: var(--ink-2);">📅 Octubre en curso (al 13/oct)</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 600;">$4,685.86 <span style="color: var(--ink-3); font-size: 12px;">(8 pedidos)</span></div>
+        
+        <div style="color: var(--ink); font-weight: 700; padding-top: 10px; border-top: 1px solid #EEE;">= Total neto generado para RIBEN</div>
+        <div style="text-align: right; font-family: 'JetBrains Mono', monospace; font-weight: 800; color: var(--good); padding-top: 10px; border-top: 1px solid #EEE;">$7,730.79</div>
+      </div>
+    </div>
+    
+    <!-- ROI card -->
+    <div style="margin-top: 20px; padding: 20px 24px; background: linear-gradient(135deg, var(--good), #55EFC4); color: white; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <div>
+        <div style="font-size: 11px; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">🚀 Retorno de la inversión del alta</div>
+        <div style="font-size: 13px; opacity: 0.9; margin-top: 4px;">Por cada $1 que BIUBOX regaló en alta, RIBEN ya generó $4.03 en neto</div>
+      </div>
+      <div style="font-size: 32px; font-weight: 800; letter-spacing: -0.5px;">403% ROI</div>
+    </div>
+    
+    <!-- Lista de SKUs con/sin ventas -->
+    <h4 style="font-size: 14px; font-weight: 700; margin-top: 28px; margin-bottom: 12px;">📋 Detalle de los 16 SKUs nuevos</h4>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Producto</th>
+            <th class="num">Pedidos</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: #E8F5F0;">
+            <td class="sku-cell">1195096232</td>
+            <td>Termogénico abdominal Mesoestetic</td>
+            <td class="num strong">7</td>
+            <td><span class="pill good">⭐ Top vendedor</span></td>
+          </tr>
+          <tr style="background: #E8F5F0;">
+            <td class="sku-cell">1207573236</td>
+            <td>Kit Glúteo Total MES (Peptonas + Boom Booty)</td>
+            <td class="num strong">6</td>
+            <td><span class="pill good">⭐ Top vendedor</span></td>
+          </tr>
+          <tr style="background: #E8F5F0;">
+            <td class="sku-cell">1204574487</td>
+            <td>Proteína vegana orgánica</td>
+            <td class="num strong">1</td>
+            <td><span class="pill good">Vendiendo</span></td>
+          </tr>
+          <tr style="background: #E8F5F0;">
+            <td class="sku-cell">1207363657</td>
+            <td>Focus Mesofrance con bacopa</td>
+            <td class="num strong">1</td>
+            <td><span class="pill good">Vendiendo</span></td>
+          </tr>
+          <tr style="background: #FFF9F0;">
+            <td class="sku-cell">1199676284</td>
+            <td>Termogénico Abs of Steel</td>
+            <td class="num">1 pendiente envío</td>
+            <td><span class="pill warn">En proceso</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1204228678</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1207360658</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1207360763</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1207361131</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1207361239</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1207363380</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1207363444</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1207363738</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1207470917</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1207531070</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+          <tr>
+            <td class="sku-cell">1210393010</td><td style="color: var(--ink-3);">—</td><td class="num" style="color: var(--ink-3);">0</td><td><span class="pill" style="background: #F0F0F0; color: var(--ink-3);">Sin ventas aún</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div style="margin-top: 20px; padding: 14px 18px; background: white; border-radius: 10px; border-left: 4px solid var(--info); font-size: 13px; color: var(--ink-2); line-height: 1.6;">
+      <strong style="color: var(--ink);">💡 Nota:</strong> Los 10 SKUs sin ventas aún no reflejan rotación. Vale la pena revisar listings (fotos, descripción, precio) para optimizar su conversión.
+    </div>
+    
   </div>
 </section>
 
